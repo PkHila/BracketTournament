@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrganizadorDeTorneos {
@@ -69,7 +70,31 @@ public class OrganizadorDeTorneos {
         return cantRondas;
     }
 
-    public void jugarTorneo(String nombre) {
-        /** magia **/
+    private ArrayList<Enfrentamiento> crearRonda(int cantEnfrentamientos, ArrayList<Competidor> competidoresDeRonda){
+        ArrayList<Enfrentamiento> ronda = new ArrayList<>();
+        int contEnfrentamientos = 0;
+        int contCompetidores = 0;
+        while(contEnfrentamientos < competidoresDeRonda.size()/2){
+            Competidor competidor1 = competidoresDeRonda.get(contCompetidores);
+            contCompetidores++;
+            Competidor competidor2 = competidoresDeRonda.get(contCompetidores);
+            contCompetidores++;
+
+            Enfrentamiento nuevoEnfrentamiento = new Enfrentamiento(competidor1,competidor2);
+            contEnfrentamientos++;
+            ronda.add(nuevoEnfrentamiento);
+        }
+        return ronda;
+    }
+
+    public void jugarTorneo(Torneo torneo) {
+       /* ArrayList<ArrayList<Enfrentamiento>> Rondas = new ArrayList<>();
+        int cantidadRondas = calcularCantidadDeRondas(torneo.getCantElementos());
+
+        for (int i = 0; i < cantidadRondas; i++) {
+            for (int i = 0; i < ; i++){
+
+            }
+        }*/
     }
 }
