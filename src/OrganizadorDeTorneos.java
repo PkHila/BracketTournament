@@ -58,12 +58,8 @@ public class OrganizadorDeTorneos {
 
     private int calcularCantidadDeRondas(int cantidadDeCompetidores) { // o cantCompetidores
         int cantRondas = 0;
-        /*while(cantidadDeCompetidores > 1) { // puede haber un problema con el descarte de restos sucesivos?
-            cantidadDeCompetidores /= 2;
-            cantRondas++;
-        }*/
         int potenciaDeDos = 2;
-        while(cantidadDeCompetidores <= potenciaDeDos) { // esto es mejor?
+        while(cantidadDeCompetidores >= potenciaDeDos) {
             potenciaDeDos *= 2;
             cantRondas++;
         }
