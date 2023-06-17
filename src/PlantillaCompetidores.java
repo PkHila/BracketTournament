@@ -31,8 +31,11 @@ public class PlantillaCompetidores {
         return cantElementos;
     }
 
-    public ArrayList<Competidor> copiarAlArray(){ //copia los elementos contenidos en el torneo a un Array con orden random
 
+    public ArrayList<Competidor> copiarAlArray() throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
+        if(!potenciaDeDos(listaCompetidores.size())) {
+            throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
+        }
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         int cantidadDeCompetidores = 0;
