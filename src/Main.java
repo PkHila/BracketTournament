@@ -18,9 +18,9 @@ public class Main {
         batallaDeLasBandas.agregarCompetidor(competidorB);
         batallaDeLasBandas.agregarCompetidor(competidorC);
         batallaDeLasBandas.agregarCompetidor(competidorD);
-        ArrayList<Competidor> competidores = new ArrayList<>();
-        batallaDeLasBandas.copiarAlArray(competidores);
-        System.out.println(competidores);
+
+        OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
+        sistema.jugarTorneo(batallaDeLasBandas);
 
 
     }

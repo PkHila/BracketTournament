@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class OrganizadorDeTorneos {
     private HashMap<String, PlantillaCompetidores> plantillas;
@@ -66,31 +67,49 @@ public class OrganizadorDeTorneos {
         return cantRondas;
     }
 
-    private ArrayList<Enfrentamiento> crearRonda(int cantEnfrentamientos, ArrayList<Competidor> competidoresDeRonda){
-        ArrayList<Enfrentamiento> ronda = new ArrayList<>();
-        int contEnfrentamientos = 0;
-        int contCompetidores = 0;
-        while(contEnfrentamientos < competidoresDeRonda.size()/2){
-            Competidor competidor1 = competidoresDeRonda.get(contCompetidores);
-            contCompetidores++;
-            Competidor competidor2 = competidoresDeRonda.get(contCompetidores);
-            contCompetidores++;
+    private ArrayList<Enfrentamiento> crearRonda(ArrayList<Competidor> arregloCompetidores){
 
-            Enfrentamiento nuevoEnfrentamiento = new Enfrentamiento(competidor1,competidor2);
-            contEnfrentamientos++;
+        ArrayList<Enfrentamiento>  ronda = new ArrayList<>();
+        int cantEnfrentamientos = arregloCompetidores.size()/2; //la cant de enfrentamientos 1 vs 1 es la mitad de la cant de competidores;
+        int i = 0; //índice de enfrentamientos
+        int j = 0; //índice de competidores
+        Enfrentamiento nuevoEnfrentamiento;
+        while(i<cantEnfrentamientos){
+            nuevoEnfrentamiento = new Enfrentamiento(arregloCompetidores.get(j), arregloCompetidores.get(j+1));
             ronda.add(nuevoEnfrentamiento);
+            j = j + 2;
+            i++;
         }
+
+        System.out.println("Ronda: \n" + ronda); //test
+
         return ronda;
     }
 
-    public void jugarTorneo(PlantillaCompetidores plantilla) {
-       /* ArrayList<ArrayList<Enfrentamiento>> Rondas = new ArrayList<>();
-        int cantidadRondas = calcularCantidadDeRondas(torneo.getCantElementos());
+    public void jugarTorneo(PlantillaCompetidores competidores) {
 
-        for (int i = 0; i < cantidadRondas; i++) {
-            for (int i = 0; i < ; i++){
+        //paso los competidores de la plantilla a un arreglo
+        ArrayList<Competidor> arregloCompetidores = new ArrayList<>();
+        arregloCompetidores = competidores.copiarAlArray();
 
-            }
-        }*/
+        //calculo cuantas rondas van a ser en base a la cantidad de Competidores
+        int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
+
+        //Gran estructura de Rondas, contiene cada ronda
+        ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
+        //Le agrego la primera ronda para testear
+        rondas.add(crearRonda(arregloCompetidores));
+
+        //Vacío el arreglo de Competidores
+        arregloCompetidores.clear();
+        Competidor ganador;
+
+        Random rand = new Random();//!!!Para testear. Remover luego!!!
+        for(Enfrentamiento enfrentamiento : rondas.get(0)){
+            ganador = enfrentamiento.votar(rand.nextInt(1,2));
+            arregloCompetidores.add(ganador);
+        }
+
+        System.out.println("Ganadores: " + arregloCompetidores); //test
     }
 }

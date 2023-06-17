@@ -31,8 +31,9 @@ public class PlantillaCompetidores {
         return cantElementos;
     }
 
-    public void copiarAlArray(ArrayList<Competidor> arrayCompetidores){ //copia los elementos contenidos en el torneo a un Array con orden random
+    public ArrayList<Competidor> copiarAlArray(){ //copia los elementos contenidos en el torneo a un Array con orden random
         // se podria llamar getCompetidores() y podria retornarlo, eso es problema de eleccion de diseño
+        ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         while (it.hasNext()) { // tal vez && i < 16
             Competidor aux = it.next();
@@ -40,6 +41,7 @@ public class PlantillaCompetidores {
             arrayCompetidores.add(competidor);
         }
         Collections.shuffle(arrayCompetidores);
+        return arrayCompetidores;
     }
 
     @Override
