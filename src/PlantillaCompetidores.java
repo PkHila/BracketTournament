@@ -32,18 +32,28 @@ public class PlantillaCompetidores {
     }
 
     public ArrayList<Competidor> copiarAlArray(){ //copia los elementos contenidos en el torneo a un Array con orden random
-        // se podria llamar getCompetidores() y podria retornarlo, eso es problema de eleccion de diseño
+
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
-        while (it.hasNext()) { // tal vez && i < 16
+        int cantidadDeCompetidores = 0;
+        while (it.hasNext() && cantidadDeCompetidores < 16) {
             Competidor aux = it.next();
             Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
             arrayCompetidores.add(competidor);
+            cantidadDeCompetidores++;
         }
         Collections.shuffle(arrayCompetidores);
         return arrayCompetidores;
     }
 
+
+    private static boolean potenciaDeDos(int numero) {
+        if(numero == 1) {
+            return true;
+        } else if (numero >= 2) {
+            return potenciaDeDos(numero / 2);
+        } return false;
+    }
     @Override
     public String toString() {
         return "Torneo: " + nombre + ", categoria:'" + categoria + "\n" + listaCompetidores;

@@ -90,7 +90,11 @@ public class OrganizadorDeTorneos {
 
         //paso los competidores de la plantilla a un arreglo
         ArrayList<Competidor> arregloCompetidores = new ArrayList<>();
-        arregloCompetidores = competidores.copiarAlArray();
+        try {
+            arregloCompetidores = competidores.copiarAlArray();
+        } catch (CompetidoresInsuficientesException e) {
+            System.out.println(e.getMessage());
+        }
 
         //calculo cuantas rondas van a ser en base a la cantidad de Competidores
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
