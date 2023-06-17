@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 
 public class Torneo {
 
@@ -34,12 +32,14 @@ public class Torneo {
     }
 
     public void copiarAlArray(ArrayList<Competidor> arrayCompetidores){ //copia los elementos contenidos en el torneo a un Array con orden random
+        // se podria llamar getCompetidores() y podria retornarlo, eso es problema de eleccion de diseño
         Iterator<Competidor> it = listaCompetidores.iterator();
-        while (it.hasNext()) {
+        while (it.hasNext()) { // tal vez && i < 16
             Competidor aux = it.next();
             Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
             arrayCompetidores.add(competidor);
         }
+        Collections.shuffle(arrayCompetidores);
     }
 
     @Override
