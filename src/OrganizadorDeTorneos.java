@@ -86,7 +86,8 @@ public class OrganizadorDeTorneos {
         return ronda;
     }
 
-    public void jugarTorneo(PlantillaCompetidores competidores) {
+    public Competidor jugarTorneo(PlantillaCompetidores competidores) {
+        Competidor ganador = null;
 
         //paso los competidores de la plantilla a un arreglo
         ArrayList<Competidor> arregloCompetidores = new ArrayList<>();
@@ -101,19 +102,22 @@ public class OrganizadorDeTorneos {
 
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
-        //Le agrego la primera ronda para testear
-        rondas.add(crearRonda(arregloCompetidores));
 
-        //Vacío el arreglo de Competidores
-        arregloCompetidores.clear();
-        Competidor ganador;
+        //----------------------------------------------------------------------------------//
+        for(int i = 0; i<cantidadRondas; i++){
+            //Le agrego la primera ronda para testear
+            rondas.add(crearRonda(arregloCompetidores));
 
-        Random rand = new Random();//!!!Para testear. Remover luego!!!
-        for(Enfrentamiento enfrentamiento : rondas.get(0)){
-            ganador = enfrentamiento.votar(rand.nextInt(1,2));
-            arregloCompetidores.add(ganador);
+            //Vacío el arreglo de Competidores
+            arregloCompetidores.clear();
+
+            Random rand = new Random();//!!!Para testear. Remover luego!!!
+            for(Enfrentamiento enfrentamiento : rondas.get(i)){
+                ganador = enfrentamiento.votar(rand.nextInt(2));
+                arregloCompetidores.add(ganador);
+            }
         }
 
-        System.out.println("Ganadores: " + arregloCompetidores); //test
+        return ganador;
     }
 }

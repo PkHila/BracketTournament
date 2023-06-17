@@ -20,8 +20,8 @@ public class Main {
         batallaDeLasBandas.agregarCompetidor(competidorD);
 
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
-        sistema.jugarTorneo(batallaDeLasBandas);
-
+        Competidor ganador = sistema.jugarTorneo(batallaDeLasBandas);
+        System.out.println("Ganador del torneo: "+ ganador);
 
     }
 }
