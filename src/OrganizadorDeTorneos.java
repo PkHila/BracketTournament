@@ -86,16 +86,12 @@ public class OrganizadorDeTorneos {
         return ronda;
     }
 
-    public Competidor jugarTorneo(PlantillaCompetidores competidores) {
+    public Competidor jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
         Competidor ganador = null;
 
         //paso los competidores de la plantilla a un arreglo
         ArrayList<Competidor> arregloCompetidores = new ArrayList<>();
-        try {
-            arregloCompetidores = competidores.copiarAlArray();
-        } catch (CompetidoresInsuficientesException e) {
-            System.out.println(e.getMessage());
-        }
+        arregloCompetidores = competidores.copiarAlArray();
 
         //calculo cuantas rondas van a ser en base a la cantidad de Competidores
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());

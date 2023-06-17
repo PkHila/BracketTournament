@@ -20,8 +20,11 @@ public class Main {
         batallaDeLasBandas.agregarCompetidor(competidorD);
 
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
-        Competidor ganador = sistema.jugarTorneo(batallaDeLasBandas);
-        System.out.println("Ganador del torneo: "+ ganador);
-
+        try {
+            Competidor ganador = sistema.jugarTorneo(batallaDeLasBandas);
+            System.out.println("Ganador del torneo: "+ ganador);
+        } catch (CompetidoresInsuficientesException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

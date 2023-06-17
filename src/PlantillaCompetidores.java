@@ -50,7 +50,7 @@ public class PlantillaCompetidores {
     }
 
 
-    private static boolean potenciaDeDos(int numero) {
+    private static boolean potenciaDeDos(float numero) {
         if(numero == 1) {
             return true;
         } else if (numero >= 2) {
