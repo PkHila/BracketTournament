@@ -2,28 +2,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class OrganizadorDeTorneos {
-    private HashMap<String, Torneo> torneos;
+    private HashMap<String, PlantillaCompetidores> plantillas;
 
     public OrganizadorDeTorneos() {
-        torneos = new HashMap<>();
+        plantillas = new HashMap<>();
     }
 
-    public Torneo crearTorneo(String nombre, String categoria) {
-        Torneo torneo = new Torneo(nombre, categoria);
-        return torneo;
+    public PlantillaCompetidores crearPlantilla(String nombre, String categoria) {
+        PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre, categoria);
+        return plantilla;
     }
 
-    public Torneo buscarTorneo(String nombre) throws Exception {
-        Torneo torneo = torneos.get(nombre);
-        if(torneo == null) {
+    public PlantillaCompetidores buscarPlantilla(String nombre) throws Exception {
+        PlantillaCompetidores plantilla = plantillas.get(nombre);
+        if(plantilla == null) {
             throw new Exception("TorneoNotFound");
         }
-        return torneo;
+        return plantilla;
     }
-    public boolean agregarTorneo(Torneo torneo) {
+    public boolean agregarPlantilla(PlantillaCompetidores plantilla) {
         boolean respuesta = false;
-        if(torneo != null && !torneos.containsKey(torneo.getNombre())) {
-            torneos.put(torneo.getNombre(), torneo);
+        if(plantilla != null && !plantillas.containsKey(plantilla.getNombre())) {
+            plantillas.put(plantilla.getNombre(), plantilla);
             respuesta = true;
         }
         /*
@@ -39,18 +39,18 @@ public class OrganizadorDeTorneos {
         return respuesta;
     }
 
-    public boolean eliminarTorneo(Torneo torneo) {
+    public boolean eliminarPlantilla(PlantillaCompetidores plantilla) {
         boolean respuesta = false;
-        if(torneo != null && torneos.containsKey(torneo.getNombre())) {
-            torneos.remove(torneo.getNombre());
+        if(plantilla != null && plantillas.containsKey(plantilla.getNombre())) {
+            plantillas.remove(plantilla.getNombre());
             respuesta = true;
         }
         return respuesta;
     }
-    public boolean eliminarTorneo(String nombre) {
+    public boolean eliminarPlantilla(String nombre) {
         boolean respuesta = false;
-        if(torneos.containsKey(nombre)) {
-            torneos.remove(nombre);
+        if(plantillas.containsKey(nombre)) {
+            plantillas.remove(nombre);
             respuesta = true;
         }
         return respuesta;
@@ -83,7 +83,7 @@ public class OrganizadorDeTorneos {
         return ronda;
     }
 
-    public void jugarTorneo(Torneo torneo) {
+    public void jugarTorneo(PlantillaCompetidores plantilla) {
        /* ArrayList<ArrayList<Enfrentamiento>> Rondas = new ArrayList<>();
         int cantidadRondas = calcularCantidadDeRondas(torneo.getCantElementos());
 

@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Torneo {
+public class PlantillaCompetidores {
 
     private HashSet<Competidor> listaCompetidores;
     private int cantElementos;
@@ -8,7 +8,7 @@ public class Torneo {
     private String nombre;
     private String categoria; //podría ser un ENUM tmb
 
-    public Torneo(String nombre, String categoria) {
+    public PlantillaCompetidores(String nombre, String categoria) {
         listaCompetidores = new HashSet<>();
         cantElementos = 0;
         this.nombre = nombre;

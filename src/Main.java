@@ -13,7 +13,7 @@ public class Main {
         Competidor ganador = testEnfrentamiento.votar(1);
         System.out.println("\nGanador: " + ganador);*/
 
-        Torneo batallaDeLasBandas = new Torneo("Batalla de las Bandas", "Música");
+        PlantillaCompetidores batallaDeLasBandas = new PlantillaCompetidores("Batalla de las Bandas", "Música");
         batallaDeLasBandas.agregarCompetidor(competidorA);
         batallaDeLasBandas.agregarCompetidor(competidorB);
         batallaDeLasBandas.agregarCompetidor(competidorC);
