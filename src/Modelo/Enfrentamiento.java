@@ -25,6 +25,6 @@ public class Enfrentamiento {
 
     @Override
     public String toString() {
-        return "Modelo.Enfrentamiento:\n" + competidores;
+        return "Enfrentamiento:\n" + competidores;
     }
 }
