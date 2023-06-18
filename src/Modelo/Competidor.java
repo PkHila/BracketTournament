@@ -1,8 +1,9 @@
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Competidor {
+public class Competidor implements Serializable {
 
     private String nombre;
     private String info;
