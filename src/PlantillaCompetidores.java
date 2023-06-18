@@ -3,14 +3,11 @@ import java.util.*;
 public class PlantillaCompetidores {
 
     private HashSet<Competidor> listaCompetidores;
-    private int cantElementos;
-
     private String nombre;
     private String categoria; //podría ser un ENUM tmb
 
     public PlantillaCompetidores(String nombre, String categoria) {
         listaCompetidores = new HashSet<>();
-        cantElementos = 0;
         this.nombre = nombre;
         this.categoria = categoria;
     }
@@ -28,7 +25,7 @@ public class PlantillaCompetidores {
     }
 
     public int getCantElementos() {
-        return cantElementos;
+        return listaCompetidores.size();
     }
 
 
