@@ -4,6 +4,7 @@ import Modelo.Competidor;
 import Modelo.Enfrentamiento;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.PlantillaCompetidores;
+import Modelo.Resultados.Resultado;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,12 +89,13 @@ public class OrganizadorDeTorneos {
             i++;
         }
 
-        System.out.println("Ronda: \n" + ronda); //test
+        // System.out.println("Ronda: \n" + ronda); //test
 
         return ronda;
     }
 
-    public Competidor jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
+    public Resultado jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
+        Resultado resultado = new Resultado();
         Competidor ganador = null;
 
         //paso los competidores de la plantilla a un arreglo
@@ -102,6 +104,7 @@ public class OrganizadorDeTorneos {
 
         //calculo cuantas rondas van a ser en base a la cantidad de Competidores
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
+        resultado.setCantidadDeRondas(cantidadRondas);
 
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
@@ -117,10 +120,12 @@ public class OrganizadorDeTorneos {
             Random rand = new Random();//!!!Para testear. Remover luego!!!
             for(Enfrentamiento enfrentamiento : rondas.get(i)){
                 ganador = enfrentamiento.votar(rand.nextInt(2));
+                resultado.agregar(enfrentamiento, ganador);
                 arregloCompetidores.add(ganador);
             }
+            resultado.setGanador(ganador);
         }
 
-        return ganador;
+        return resultado;
     }
 }

@@ -26,10 +26,14 @@ public class Competidor implements Serializable {
         return info;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Competidor competidor && competidor.getNombre().equals(this.nombre);
+    }
 
     @Override
     public String toString() {
-        return "Modelo.Competidor:\n" +
+        return "Competidor:\n" +
                 "nombre: " + nombre + ", info: " + info + "\n";
     }
 }

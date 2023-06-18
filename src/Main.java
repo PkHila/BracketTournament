@@ -2,6 +2,7 @@ import Modelo.Competidor;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Envoltorios.OrganizadorDeTorneos;
 import Modelo.PlantillaCompetidores;
+import Modelo.Resultados.Resultado;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,8 +21,8 @@ public class Main {
 
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
         try {
-            Competidor ganador = sistema.jugarTorneo(batallaDeLasBandas);
-            System.out.println("Ganador del torneo: "+ ganador);
+            Resultado resultado = sistema.jugarTorneo(batallaDeLasBandas);
+            System.out.println("Resultado del torneo: "+ resultado);
         } catch (CompetidoresInsuficientesException e) {
             System.out.println(e.getMessage());
         }
