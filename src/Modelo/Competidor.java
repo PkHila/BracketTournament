@@ -1,3 +1,5 @@
+package Modelo;
+
 import java.util.Objects;
 
 public class Competidor {
@@ -26,7 +28,7 @@ public class Competidor {
 
     @Override
     public String toString() {
-        return "Competidor:\n" +
+        return "Modelo.Competidor:\n" +
                 "nombre: " + nombre + ", info: " + info + "\n";
     }
 }

@@ -1,3 +1,10 @@
+package Modelo.Envoltorios;
+
+import Modelo.Competidor;
+import Modelo.Enfrentamiento;
+import Modelo.Excepciones.CompetidoresInsuficientesException;
+import Modelo.PlantillaCompetidores;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;

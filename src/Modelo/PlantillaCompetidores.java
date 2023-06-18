@@ -1,3 +1,7 @@
+package Modelo;
+
+import Modelo.Excepciones.CompetidoresInsuficientesException;
+
 import java.util.*;
 
 public class PlantillaCompetidores {

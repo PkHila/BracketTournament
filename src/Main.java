@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+import Modelo.Competidor;
+import Modelo.Excepciones.CompetidoresInsuficientesException;
+import Modelo.Envoltorios.OrganizadorDeTorneos;
+import Modelo.PlantillaCompetidores;
 
 public class Main {
     public static void main(String[] args) {

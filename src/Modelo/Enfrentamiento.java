@@ -1,3 +1,5 @@
+package Modelo;
+
 import java.util.ArrayList;
 
 public class Enfrentamiento {
@@ -23,6 +25,6 @@ public class Enfrentamiento {
 
     @Override
     public String toString() {
-        return "Enfrentamiento:\n" + competidores;
+        return "Modelo.Enfrentamiento:\n" + competidores;
     }
 }
