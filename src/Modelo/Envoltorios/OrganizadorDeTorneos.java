@@ -97,6 +97,7 @@ public class OrganizadorDeTorneos {
     public Resultado jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
         Resultado resultado = new Resultado();
         Competidor ganador = null;
+        Competidor perdedor = null;
 
         //paso los competidores de la plantilla a un arreglo
         ArrayList<Competidor> arregloCompetidores = new ArrayList<>();
@@ -119,8 +120,9 @@ public class OrganizadorDeTorneos {
 
             Random rand = new Random();//!!!Para testear. Remover luego!!!
             for(Enfrentamiento enfrentamiento : rondas.get(i)){
-                ganador = enfrentamiento.votar(rand.nextInt(2));
-                resultado.agregar(enfrentamiento, ganador);
+                enfrentamiento.votar(rand.nextInt(2));
+                ganador = enfrentamiento.getGanador();
+                resultado.agregarEliminado(ganador, enfrentamiento.getPerdedor(), i);
                 arregloCompetidores.add(ganador);
             }
             resultado.setGanador(ganador);

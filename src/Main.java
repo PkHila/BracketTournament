@@ -22,7 +22,7 @@ public class Main {
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
         try {
             Resultado resultado = sistema.jugarTorneo(batallaDeLasBandas);
-            System.out.println("Resultado del torneo: "+ resultado);
+            System.out.println(resultado);
         } catch (CompetidoresInsuficientesException e) {
             System.out.println(e.getMessage());
         }

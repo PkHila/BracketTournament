@@ -9,12 +9,12 @@ import java.util.*;
 public class Resultado implements Serializable {
     private int cantidadDeRondas; // con esta informacion se puede inferir en que ronda perdio cada Competidor que no es el ganador
     private Competidor ganador;
-    private LinkedHashMap<Competidor, Competidor> perdedores; // donde K es el perdedor y V es ante quien
+    private ArrayList<Eliminado> eliminados; // agregar informacion del torneo
 
     public Resultado() {
         this.cantidadDeRondas = 0;
         this.ganador = null;
-        this.perdedores = new LinkedHashMap<>();
+        this.eliminados = new ArrayList<>();
     }
 
     public int getCantidadDeRondas() {
@@ -33,51 +33,34 @@ public class Resultado implements Serializable {
         this.ganador = ganador;
     }
 
-    public void agregar(Enfrentamiento enfrentamiento, Competidor ganador) {
-        Competidor perdedor = null;
-        if(!enfrentamiento.votar(0).equals(ganador)) {
-            perdedor = enfrentamiento.votar(0);
-        }
-        else {
-            perdedor = enfrentamiento.votar(1);
-        }
-        perdedores.put(perdedor, ganador);
+    public void agregarEliminado(Competidor ganador, Competidor perdedor, int contador) {
+        Eliminado eliminado = new Eliminado(perdedor.getNombre(), perdedor.getInfo(), ganador, queRondaEs(contador));
+        eliminados.add(eliminado);
     }
 
     @Override
     public String toString() {
-        return "Resultados{" +
-                "cantidadDeRondas=" + cantidadDeRondas +
-                ", ganador=" + ganador +
-                ", perdedores:\n" + listarPerdedores() +
-                '}';
+        return "Resultado del torneo: \n"+
+                "Cantidad de rondas: " + cantidadDeRondas + "\n" +
+                "Ganador: " + ganador.getNombre() + ", info: " + ganador.getInfo() + "\n" +
+                "Eliminados:\n" + listarEliminados();
     }
-    private String listarPerdedores() {
-        Iterator<Map.Entry<Competidor,Competidor>> it = perdedores.entrySet().iterator();
-        StringBuilder listado = new StringBuilder();
-        Stack<Map.Entry<Competidor,Competidor>> entries = new Stack<>();
-        int contador = 1;
-        while (it.hasNext()) {
-            entries.push(it.next());
+
+    private String listarEliminados() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Eliminado eliminado : eliminados) {
+            stringBuilder.append(eliminado.toString());
         }
-        while (!entries.isEmpty()) {
-            Map.Entry<Competidor,Competidor> entry = entries.pop();
-            String ronda = "";
-            if(contador == 1) {
-                ronda = "final";
-            }
-            listado.append(entry.getKey().getNombre() + " ante " + entry.getValue().getNombre() + " en " + queRondaEs(contador) + "\n");
-            contador++;
-        }
-        return listado.toString();
+        return stringBuilder.toString();
     }
+
     private String queRondaEs(int contador) {
         String ronda = "";
-        if(contador == 1) {
+        if(contador == this.cantidadDeRondas - 1) {
             ronda = "ronda final";
-        } else if (contador < 4 && this.cantidadDeRondas > 2) {
+        } else if (contador == this.cantidadDeRondas - 2 && this.cantidadDeRondas > 2) {
             ronda = "ronda semi-final";
-        } else if (contador < 8 && this.cantidadDeRondas > 3) {
+        } else if (contador == this.cantidadDeRondas - 3 && this.cantidadDeRondas > 3) {
             ronda = "cuartos de final";
         } else {
             ronda = "primera ronda";
