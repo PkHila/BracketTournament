@@ -95,7 +95,7 @@ public class OrganizadorDeTorneos {
     }
 
     public Resultado jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
-        Resultado resultado = new Resultado();
+        Resultado resultado = new Resultado(competidores.getNombre(), competidores.getCategoria());
         Competidor ganador = null;
         Competidor perdedor = null;
 

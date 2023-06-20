@@ -10,11 +10,15 @@ public class Resultado implements Serializable {
     private int cantidadDeRondas; // con esta informacion se puede inferir en que ronda perdio cada Competidor que no es el ganador
     private Competidor ganador;
     private ArrayList<Eliminado> eliminados; // agregar informacion del torneo
+    private String nombre;
+    private String categoria;
 
-    public Resultado() {
+    public Resultado(String nombre, String categoria) {
         this.cantidadDeRondas = 0;
         this.ganador = null;
         this.eliminados = new ArrayList<>();
+        this.nombre = nombre;
+        this.categoria = categoria;
     }
 
     public int getCantidadDeRondas() {
@@ -38,9 +42,18 @@ public class Resultado implements Serializable {
         eliminados.add(eliminado);
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
     @Override
     public String toString() {
-        return "Resultado del torneo: \n"+
+        return "Resultado de " + nombre + ": \n" +
+                "Categoria: " + categoria + "\n" +
                 "Cantidad de rondas: " + cantidadDeRondas + "\n" +
                 "Ganador: " + ganador.getNombre() + ", info: " + ganador.getInfo() + "\n" +
                 "Eliminados:\n" + listarEliminados();
