@@ -8,7 +8,7 @@ public class PlantillaCompetidores {
 
     private HashSet<Competidor> listaCompetidores;
     private String nombre;
-    private Categoria categoria; //podría ser un ENUM tmb
+    private Categoria categoria;
 
     public PlantillaCompetidores(String nombre, Categoria categoria) {
         listaCompetidores = new HashSet<>();
