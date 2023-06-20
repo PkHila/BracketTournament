@@ -1,3 +1,4 @@
+import Modelo.Categoria;
 import Modelo.Competidor;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Envoltorios.OrganizadorDeTorneos;
@@ -12,7 +13,7 @@ public class Main {
         Competidor competidorC = new Competidor("Led Zeppelin");
         Competidor competidorD = new Competidor("Queen");
 
-        PlantillaCompetidores batallaDeLasBandas = new PlantillaCompetidores("Batalla de las Bandas", "Música");
+        PlantillaCompetidores batallaDeLasBandas = new PlantillaCompetidores("Batalla de las Bandas", Categoria.MUSICA);
         batallaDeLasBandas.agregarCompetidor(competidorA);
         batallaDeLasBandas.agregarCompetidor(competidorB);
         batallaDeLasBandas.agregarCompetidor(competidorC);

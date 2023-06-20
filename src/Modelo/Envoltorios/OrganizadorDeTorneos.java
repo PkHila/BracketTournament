@@ -1,9 +1,11 @@
 package Modelo.Envoltorios;
 
+import Modelo.Categoria;
 import Modelo.Competidor;
 import Modelo.Enfrentamiento;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.PlantillaCompetidores;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +18,7 @@ public class OrganizadorDeTorneos {
         plantillas = new HashMap<>();
     }
 
-    public PlantillaCompetidores crearPlantilla(String nombre, String categoria) {
+    public PlantillaCompetidores crearPlantilla(String nombre, Categoria categoria) {
         PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre, categoria);
         return plantilla;
     }
@@ -122,5 +124,14 @@ public class OrganizadorDeTorneos {
         }
 
         return ganador;
+    }
+
+    public String realizarBusqueda(String terminoABuscar, Categoria categoria){
+        StringBuilder url = new StringBuilder();
+        switch (categoria){
+            case ANIME -> url.append("https://api.jikan.moe/v4/anime?q=").append(terminoABuscar).append("&sfw&limit=3");
+            case MANGA -> url.append("https://api.jikan.moe/v4/manga?q=").append(terminoABuscar).append("&sfw&limit=3");
+        }
+        return url.toString();
     }
 }
