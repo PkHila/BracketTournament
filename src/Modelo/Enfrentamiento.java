@@ -1,6 +1,10 @@
 package Modelo;
 
+import Modelo.Resultados.Eliminado;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Enfrentamiento {
 
@@ -12,12 +16,19 @@ public class Enfrentamiento {
         competidores.add(competidor2);
     }
 
-    public Competidor votar(int votacion)
+    public void votar(int votacion)
     {
-        ///Falta IndexOutOfBoundsException
-        return competidores.get(votacion);
+        if(competidores.get(1).equals(votacion)) {
+            Collections.reverse(competidores);
+        }
     }
 
+    public Competidor getGanador() {
+        return competidores.get(0);
+    }
+    public Competidor getPerdedor() {
+        return competidores.get(1);
+    }
     public int getCantCompetidores(){
         return competidores.size();
     }
@@ -25,6 +36,6 @@ public class Enfrentamiento {
 
     @Override
     public String toString() {
-        return "Modelo.Enfrentamiento:\n" + competidores;
+        return "Enfrentamiento:\n" + competidores;
     }
 }
