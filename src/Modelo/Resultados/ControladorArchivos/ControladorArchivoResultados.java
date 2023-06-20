@@ -12,14 +12,12 @@ public abstract class ControladorArchivoResultados {
             resultados = leer(archivo);
         } catch (IOException e) { // siempre que se corrompa o no se pueda abrir se va a sobreescribir con lo que se esta intentando grabar
             resultados = new ArrayList<>();
-            resultados.add(resultado);
         }
+        resultados.add(resultado);
+
         FileOutputStream fileOutputStream = new FileOutputStream(archivo);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        if (!resultados.contains(resultado)) {
-            resultados.add(resultado);
-        }
         for (Resultado r : resultados) {
             objectOutputStream.writeObject(r);
         }
