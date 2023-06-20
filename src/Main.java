@@ -3,6 +3,11 @@ import Modelo.Competidor;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Envoltorios.OrganizadorDeTorneos;
 import Modelo.PlantillaCompetidores;
+import Modelo.Resultados.ControladorArchivos.ControladorArchivos;
+import Modelo.Resultados.Resultado;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,9 +26,13 @@ public class Main {
 
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
         try {
-            Competidor ganador = sistema.jugarTorneo(batallaDeLasBandas);
-            System.out.println("Ganador del torneo: "+ ganador);
-        } catch (CompetidoresInsuficientesException e) {
+            Resultado resultado = sistema.jugarTorneo(batallaDeLasBandas);
+            System.out.println(resultado);
+            ControladorArchivos<Resultado> resultadoControladorArchivos = new ControladorArchivos<>();
+            resultadoControladorArchivos.grabar(resultado, "resultados.bin");
+            ArrayList<Resultado> resultados = resultadoControladorArchivos.leer("resultados.bin");
+            System.out.println(resultados);
+        } catch (CompetidoresInsuficientesException | IOException e) {
             System.out.println(e.getMessage());
         }
     }

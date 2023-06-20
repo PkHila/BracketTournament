@@ -1,8 +1,9 @@
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Competidor{
+public class Competidorimplements Serializable {
 
     private String nombre;
     private String info;
@@ -34,10 +35,14 @@ public class Competidor{
         this.info = info;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Competidor competidor && competidor.getNombre().equals(this.nombre);
+    }
 
     @Override
     public String toString() {
-        return "Modelo.Competidor:\n" +
+        return "Competidor:\n" +
                 "nombre: " + nombre + ", info: " + info + "\n";
     }
 }
