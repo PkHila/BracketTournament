@@ -1,5 +1,6 @@
 package Modelo.Resultados;
 
+import Modelo.Categoria;
 import Modelo.Competidor;
 import Modelo.Enfrentamiento;
 
@@ -11,9 +12,9 @@ public class Resultado implements Serializable {
     private Competidor ganador;
     private ArrayList<Eliminado> eliminados; // agregar informacion del torneo
     private String nombre;
-    private String categoria;
+    private Categoria categoria;
 
-    public Resultado(String nombre, String categoria) {
+    public Resultado(String nombre, Categoria categoria) {
         this.cantidadDeRondas = 0;
         this.ganador = null;
         this.eliminados = new ArrayList<>();
@@ -46,7 +47,7 @@ public class Resultado implements Serializable {
         return nombre;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
