@@ -2,7 +2,7 @@ import Modelo.Competidor;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Envoltorios.OrganizadorDeTorneos;
 import Modelo.PlantillaCompetidores;
-import Modelo.Resultados.ControladorArchivos.ControladorArchivoResultados;
+import Modelo.Resultados.ControladorArchivos.ControladorArchivos;
 import Modelo.Resultados.Resultado;
 
 import java.io.IOException;
@@ -27,8 +27,9 @@ public class Main {
         try {
             Resultado resultado = sistema.jugarTorneo(batallaDeLasBandas);
             System.out.println(resultado);
-            ControladorArchivoResultados.grabar(resultado, "resultados.bin");
-            ArrayList<Resultado> resultados = ControladorArchivoResultados.leer("resultados.bin");
+            ControladorArchivos<Resultado> resultadoControladorArchivos = new ControladorArchivos<>();
+            resultadoControladorArchivos.grabar(resultado, "resultados.bin");
+            ArrayList<Resultado> resultados = resultadoControladorArchivos.leer("resultados.bin");
             System.out.println(resultados);
         } catch (CompetidoresInsuficientesException | IOException e) {
             System.out.println(e.getMessage());

@@ -5,29 +5,29 @@ import Modelo.Resultados.Resultado;
 import java.io.*;
 import java.util.ArrayList;
 
-public abstract class ControladorArchivoResultados {
-    public static void grabar(Resultado resultado, String archivo) throws IOException {
-        ArrayList<Resultado> resultados = null;
+public class ControladorArchivos<T extends Serializable> {
+    public void grabar(T elemento, String archivo) throws IOException {
+        ArrayList<T> elementos = null;
         try {
-            resultados = leer(archivo);
+            elementos = leer(archivo);
         } catch (IOException e) { // siempre que se corrompa o no se pueda abrir se va a sobreescribir con lo que se esta intentando grabar
-            resultados = new ArrayList<>();
+            elementos = new ArrayList<>();
         }
-        resultados.add(resultado);
+        elementos.add(elemento);
 
         FileOutputStream fileOutputStream = new FileOutputStream(archivo);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        for (Resultado r : resultados) {
-            objectOutputStream.writeObject(r);
+        for (T e : elementos) {
+            objectOutputStream.writeObject(e);
         }
 
         fileOutputStream.close();
         objectOutputStream.close();
     }
 
-    public static ArrayList<Resultado> leer(String archivo) throws IOException {
-        ArrayList<Resultado> resultados = new ArrayList<>();
+    public ArrayList<T> leer(String archivo) throws IOException {
+        ArrayList<T> elementos = new ArrayList<>();
 
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
@@ -36,8 +36,8 @@ public abstract class ControladorArchivoResultados {
             fileInputStream = new FileInputStream(archivo);
             objectInputStream = new ObjectInputStream(fileInputStream);
             while (true) {
-                Resultado resultado = (Resultado) objectInputStream.readObject();
-                resultados.add(resultado);
+                T elemento = (T) objectInputStream.readObject();
+                elementos.add(elemento);
             }
         } catch (EOFException e) {
             // all good
@@ -52,8 +52,6 @@ public abstract class ControladorArchivoResultados {
                 objectInputStream.close();
             }
         }
-
-
-        return resultados;
+        return elementos;
     }
 }
