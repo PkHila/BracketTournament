@@ -3,10 +3,13 @@ package Modelo;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Competidor implements Serializable {
+public class Competidor{
 
     private String nombre;
     private String info;
+
+    public Competidor() {
+    }
 
     public Competidor(String nombre){
         this.nombre = nombre;
@@ -22,8 +25,16 @@ public class Competidor implements Serializable {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getInfo() {
         return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     @Override

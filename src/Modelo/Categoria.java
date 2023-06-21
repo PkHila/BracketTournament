@@ -2,7 +2,8 @@ package Modelo;
 
 public enum Categoria {
 
-    ANIME("Anime"), MANGA("Manga"), MUSICA("Musica"), PELICULAS("Peliculas");
+    ANIME("Anime"), MANGA("Manga"), PELICULAS("Peliculas"),
+    SERIES("Series"), JUEGOS("Juegos"), PERSONALIZADA("Personalizada");
 
     private final String nombre;
 

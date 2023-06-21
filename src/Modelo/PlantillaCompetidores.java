@@ -9,9 +9,9 @@ public class PlantillaCompetidores implements Serializable{
 
     private HashSet<Competidor> listaCompetidores;
     private String nombre;
-    private String categoria; //podría ser un ENUM tmb
+    private Categoria categoria;
 
-    public PlantillaCompetidores(String nombre, String categoria) {
+    public PlantillaCompetidores(String nombre, Categoria categoria) {
         listaCompetidores = new HashSet<>();
         this.nombre = nombre;
         this.categoria = categoria;
@@ -21,7 +21,7 @@ public class PlantillaCompetidores implements Serializable{
         return nombre;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 

@@ -1,11 +1,10 @@
 package Modelo.Envoltorios;
 
-import Modelo.Competidor;
-import Modelo.Enfrentamiento;
+import Modelo.*;
+import Modelo.APIs.AnimeAPI;
+import Modelo.APIs.MangaAPI;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
-import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ public class OrganizadorDeTorneos implements Serializable {
         plantillas = new HashMap<>();
     }
 
-    public PlantillaCompetidores crearPlantilla(String nombre, String categoria) {
+    public PlantillaCompetidores crearPlantilla(String nombre, Categoria categoria) {
         PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre, categoria);
         return plantilla;
     }
@@ -98,13 +97,11 @@ public class OrganizadorDeTorneos implements Serializable {
     public Resultado jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
         Resultado resultado = new Resultado(competidores.getNombre(), competidores.getCategoria());
         Competidor ganador = null;
-        Competidor perdedor = null;
 
         //paso los competidores de la plantilla a un arreglo
-        ArrayList<Competidor> arregloCompetidores = new ArrayList<>();
+        ArrayList<Competidor> arregloCompetidores;
         arregloCompetidores = competidores.copiarAlArray();
 
-        //calculo cuantas rondas van a ser en base a la cantidad de Competidores
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
         resultado.setCantidadDeRondas(cantidadRondas);
 
@@ -131,4 +128,14 @@ public class OrganizadorDeTorneos implements Serializable {
 
         return resultado;
     }
+
+    //TODO: completar opciones
+    /*private ArrayList<Competidor> obtenerCompetidores(String terminoABuscar, Categoria categoria){
+        return switch (categoria){
+            case ANIME -> new AnimeAPI().obtenerCompetidores(terminoABuscar);
+            case MANGA -> new MangaAPI().obtenerCompetidores(terminoABuscar);
+            case PELICULAS -> null;
+        };
+    }*/
+
 }
