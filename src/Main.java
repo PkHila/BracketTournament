@@ -1,16 +1,14 @@
-import Modelo.Categoria;
+import Modelo.APIs.JuegosAPI;
+import Modelo.APIs.MangaAPI;
+import Modelo.APIs.PeliculasAPI;
+import Modelo.APIs.SeriesAPI;
 import Modelo.Competidor;
-import Modelo.Excepciones.CompetidoresInsuficientesException;
-import Modelo.Envoltorios.OrganizadorDeTorneos;
-import Modelo.PlantillaCompetidores;
-import Modelo.Resultados.ControladorArchivos.ControladorArchivos;
-import Modelo.Resultados.Resultado;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         ControladorArchivos<Resultado> resultadoControladorArchivos = new ControladorArchivos<>();
         ArrayList<Resultado> resultados = null;
         try {
@@ -25,7 +23,7 @@ public class Main {
         Competidor competidorC = new Competidor("Led Zeppelin");
         Competidor competidorD = new Competidor("Queen");
 
-        PlantillaCompetidores batallaDeLasBandas = new PlantillaCompetidores("Batalla de las Bandas", Categoria.MUSICA);
+        PlantillaCompetidores batallaDeLasBandas = new PlantillaCompetidores("Batalla de las Bandas", Categoria.PERSONALIZADA);
         batallaDeLasBandas.agregarCompetidor(competidorA);
         batallaDeLasBandas.agregarCompetidor(competidorB);
         batallaDeLasBandas.agregarCompetidor(competidorC);
@@ -42,6 +40,10 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        System.out.println(Categoria.MUSICA);
+        System.out.println(Categoria.PERSONALIZADA);*/
+
+        SeriesAPI comp = new SeriesAPI();
+        ArrayList<Competidor> competidores = comp.obtenerCompetidores("Teenage Mutant Ninja Turtles");
+        System.out.println(competidores);
     }
 }
