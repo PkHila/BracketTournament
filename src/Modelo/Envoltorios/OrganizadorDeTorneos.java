@@ -1,18 +1,16 @@
 package Modelo.Envoltorios;
 
-import Modelo.Categoria;
-import Modelo.Competidor;
-import Modelo.Enfrentamiento;
+import Modelo.*;
+import Modelo.APIs.AnimeAPI;
+import Modelo.APIs.MangaAPI;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
-import Modelo.PlantillaCompetidores;
-import org.json.JSONObject;
 import Modelo.Resultados.Resultado;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class OrganizadorDeTorneos {
+public class OrganizadorDeTorneos implements Serializable {
     private HashMap<String, PlantillaCompetidores> plantillas;
 
     public OrganizadorDeTorneos() {
@@ -104,7 +102,6 @@ public class OrganizadorDeTorneos {
         ArrayList<Competidor> arregloCompetidores;
         arregloCompetidores = competidores.copiarAlArray();
 
-        //fixme: calculo cuantas rondas van a ser en base a la cantidad de Competidores
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
         resultado.setCantidadDeRondas(cantidadRondas);
 
@@ -132,12 +129,14 @@ public class OrganizadorDeTorneos {
         return resultado;
     }
 
-    public String realizarBusqueda(String terminoABuscar, Categoria categoria){
-        StringBuilder url = new StringBuilder();
-        switch (categoria){
-            case ANIME -> url.append("https://api.jikan.moe/v4/anime?q=").append(terminoABuscar).append("&sfw&limit=3");
-            case MANGA -> url.append("https://api.jikan.moe/v4/manga?q=").append(terminoABuscar).append("&sfw&limit=3");
-        }
-        return url.toString();
+    //todo: completar opciones
+    private ArrayList<Competidor> obtenerCompetidores(String terminoABuscar, Categoria categoria){
+        return switch (categoria){
+            case ANIME -> new AnimeAPI().obtenerCompetidores(terminoABuscar);
+            case MANGA -> new MangaAPI().obtenerCompetidores(terminoABuscar);
+            case MUSICA -> null;
+            case PELICULAS -> null;
+        };
     }
+
 }

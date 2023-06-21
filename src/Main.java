@@ -35,5 +35,7 @@ public class Main {
         } catch (CompetidoresInsuficientesException | IOException e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println(Categoria.MUSICA);
     }
 }
