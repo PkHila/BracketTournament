@@ -10,6 +10,13 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        ControladorArchivos<Resultado> resultadoControladorArchivos = new ControladorArchivos<>();
+        ArrayList<Resultado> resultados = null;
+        try {
+            resultados = resultadoControladorArchivos.leer("resultados.bin");
+        } catch (IOException e) {
+            resultados = new ArrayList<>();
+        }
 
         //Test de funcionamiento básico
         Competidor competidorA = new Competidor("The Beatles");
@@ -26,10 +33,9 @@ public class Main {
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
         try {
             Resultado resultado = sistema.jugarTorneo(batallaDeLasBandas);
+            resultados.add(resultado);
             System.out.println(resultado);
-            ControladorArchivos<Resultado> resultadoControladorArchivos = new ControladorArchivos<>();
-            resultadoControladorArchivos.grabar(resultado, "resultados.bin");
-            ArrayList<Resultado> resultados = resultadoControladorArchivos.leer("resultados.bin");
+            resultadoControladorArchivos.grabar(resultados, "resultados.bin");
             System.out.println(resultados);
         } catch (CompetidoresInsuficientesException | IOException e) {
             System.out.println(e.getMessage());
