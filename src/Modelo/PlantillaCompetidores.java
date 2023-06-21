@@ -34,14 +34,14 @@ public class PlantillaCompetidores implements Serializable{
     }
 
 
-    public ArrayList<Competidor> copiarAlArray() throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
+    public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
         if(!potenciaDeDos(listaCompetidores.size())) {
             throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
         }
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         int cantidadDeCompetidores = 0;
-        while (it.hasNext() && cantidadDeCompetidores < 16) {
+        while (it.hasNext() && cantidadDeCompetidores < limite) {
             Competidor aux = it.next();
             Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
             arrayCompetidores.add(competidor);
@@ -49,6 +49,10 @@ public class PlantillaCompetidores implements Serializable{
         }
         Collections.shuffle(arrayCompetidores);
         return arrayCompetidores;
+    }
+    public ArrayList<Competidor> copiarAlArray() throws CompetidoresInsuficientesException {
+
+        return copiarAlArray(16);
     }
 
 
