@@ -6,15 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ControladorArchivos<T extends Serializable> {
-    public void grabar(T elemento, String archivo) throws IOException {
-        ArrayList<T> elementos = null;
-        try {
-            elementos = leer(archivo);
-        } catch (IOException e) { // siempre que se corrompa o no se pueda abrir se va a sobreescribir con lo que se esta intentando grabar
-            elementos = new ArrayList<>();
-        }
-        elementos.add(elemento);
-
+    public void grabar(ArrayList<T> elementos, String archivo) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(archivo);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
