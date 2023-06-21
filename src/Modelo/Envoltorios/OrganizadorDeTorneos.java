@@ -6,11 +6,12 @@ import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class OrganizadorDeTorneos {
+public class OrganizadorDeTorneos implements Serializable {
     private HashMap<String, PlantillaCompetidores> plantillas;
 
     public OrganizadorDeTorneos() {

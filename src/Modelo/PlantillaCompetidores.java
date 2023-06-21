@@ -2,9 +2,10 @@ package Modelo;
 
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class PlantillaCompetidores {
+public class PlantillaCompetidores implements Serializable{
 
     private HashSet<Competidor> listaCompetidores;
     private String nombre;
