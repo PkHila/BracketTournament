@@ -19,7 +19,7 @@ public class ControladorArchivos<T extends Serializable> {
     }
 
     public ArrayList<T> leer(String archivo) throws IOException {
-        ArrayList<T> elementos = new ArrayList<>();
+        ArrayList<T> elementos = null;
 
         FileInputStream fileInputStream = null;
         ObjectInputStream objectInputStream = null;
@@ -27,6 +27,7 @@ public class ControladorArchivos<T extends Serializable> {
         try {
             fileInputStream = new FileInputStream(archivo);
             objectInputStream = new ObjectInputStream(fileInputStream);
+            elementos = new ArrayList<>();
             while (true) {
                 T elemento = (T) objectInputStream.readObject();
                 elementos.add(elemento);
