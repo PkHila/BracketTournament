@@ -1,19 +1,41 @@
 import Modelo.APIs.*;
 import Modelo.Competidor;
-
+import Modelo.Menu.Menu;
+import Modelo.PlantillaCompetidores;
+import Modelo.Resultados.ControladorArchivos.ControladorArchivos;
+import Modelo.Resultados.Resultado;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        /*
-        ControladorArchivos<Resultado> resultadoControladorArchivos = new ControladorArchivos<>();
+        ControladorArchivos<PlantillaCompetidores> controladorArchivoPlantillas = new ControladorArchivos<>();
+        ArrayList<PlantillaCompetidores> plantillas = null;
+        try {
+            plantillas = controladorArchivoPlantillas.leer("plantillas.bin");
+        } catch (IOException e) {
+            plantillas = new ArrayList<>();
+        }
+        ControladorArchivos<Resultado> controladorArchivoResultados = new ControladorArchivos<>();
         ArrayList<Resultado> resultados = null;
         try {
-            resultados = resultadoControladorArchivos.leer("resultados.bin");
+            resultados = controladorArchivoResultados.leer("resultados.bin");
         } catch (IOException e) {
             resultados = new ArrayList<>();
         }
 
+        Menu.principal(plantillas, resultados);
+        try { // fixme: determinar si es mejor todo el en mismo try catch
+            controladorArchivoPlantillas.grabar(plantillas, "plantillas.bin");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        try {
+            controladorArchivoResultados.grabar(resultados, "resultados.bin");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        /*
         //Test de funcionamiento básico
         Competidor competidorA = new Competidor("The Beatles");
         Competidor competidorB = new Competidor("The Rolling Stones");
@@ -39,10 +61,8 @@ public class Main {
 
         System.out.println(Categoria.PERSONALIZADA);*/
 
-        AnimeAPI comp = new AnimeAPI();
-        ArrayList<Competidor> competidores = comp.obtenerCompetidores("One Piece");
-        System.out.println(competidores);
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        /*SeriesAPI comp = new SeriesAPI();
+        ArrayList<Competidor> competidores = comp.obtenerCompetidores("Teenage Mutant Ninja Turtles");
+        System.out.println(competidores);*/
     }
 }
