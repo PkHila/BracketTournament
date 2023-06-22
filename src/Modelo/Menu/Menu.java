@@ -10,45 +10,48 @@ import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
 import org.json.JSONException;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    private static final Scanner scanner = new Scanner(System.in);
-    public static int nextInt() {
-        return scanner.nextInt();
+    private Scanner scanner;
+    private OrganizadorDeTorneos sistema;
+
+    public Menu() {
+        scanner = new Scanner(System.in);
+        sistema = new OrganizadorDeTorneos();
     }
 
-    public static void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
+    public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
         sistema.init(plantillas, resultados); // todo traer data de archivos al mapa de plantillas y tal vez resultados que no tenemos coleccion
         do {
             System.out.println("1 jugar torneo 2 administrar plantillas");
-
+            eleccion = Integer.parseInt(scanner.nextLine());
             switch (eleccion) {
-                case 1 -> menuJugarTorneo();
-                case 2 -> menuAdministrarPlantillas();
+                case 1 -> jugarTorneo();
+                case 2 -> administrarPlantillas();
                 default -> System.out.println("default"); // todo: cambiar esto
             }
         } while (eleccion != 0);
+        scanner.close();
     }
 
-    private static void menuAdministrarPlantillas() {
+    private void administrarPlantillas() {
         int eleccion = 0;
         System.out.println("");
     }
 
-    private static void menuJugarTorneo(OrganizadorDeTorneos sistema) {
+    private void jugarTorneo() {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
             System.out.println("1 jugar torneo desde plantilla 2 crear nuevo torneo");
 
             switch (eleccion) {
-                case 1 -> plantilla = menuJugarDesdePlantilla(sistema);
-                case 2 -> plantilla = menuCrearNuevoTonreo(sistema);
+                case 1 -> plantilla = jugarDesdePlantilla();
+                case 2 -> plantilla = crearNuevoTorneo();
 
             }
             if(plantilla != null) {
@@ -62,34 +65,34 @@ public class Menu {
         } while (eleccion != 0);
     }
 
-    private static PlantillaCompetidores menuJugarDesdePlantilla(OrganizadorDeTorneos sistema) {
+    private PlantillaCompetidores jugarDesdePlantilla() {
         int eleccion = 0;
-        Categoria categoria;
+        Categoria categoria = null;
         PlantillaCompetidores plantilla = null;
         do {
             System.out.println("1 buscar por categoria 2 buscar por nombre 3 listar plantillas");
             switch (eleccion) {
                 case 1: try{
-                    categoria = menuElegirCategoria(sistema);
+                    categoria = elegirCategoria();
                 }
                 catch (CategoriaInvalidaException e){
                     System.out.println(e.getMessage());
                 }
                     if(categoria != null) { //todo considerar hacer este bloque una nueva Excepción
-                        plantilla = menuListarPlantillas(sistema, true, categoria);
+                        plantilla = listarPlantillas(true, categoria);
                     }
                     else {
                         System.out.println("No se encontró la plantilla");
                     }
                     break;
                 case 2 -> plantilla = sistema.buscarPlantilla(""); // todo scanner nextLine
-                case 3 -> plantilla = menuListarPlantillas(sistema, false, null);
+                case 3 -> plantilla = listarPlantillas(false, null);
             }
         } while (eleccion != 0);
         return plantilla;
     }
 
-    private static Categoria menuElegirCategoria(OrganizadorDeTorneos sistema) throws CategoriaInvalidaException {
+    private Categoria elegirCategoria() throws CategoriaInvalidaException {
         int eleccion = 0;
         Categoria categoria = null;
         do {
@@ -109,7 +112,7 @@ public class Menu {
         return categoria;
     }
 
-    private static PlantillaCompetidores menuListarPlantillas(OrganizadorDeTorneos sistema, boolean porCategoria, Categoria categoria) {
+    private PlantillaCompetidores listarPlantillas(boolean porCategoria, Categoria categoria) {
         PlantillaCompetidores plantilla = null;
         int eleccion = 0;
         int contador = 1;
@@ -133,12 +136,12 @@ public class Menu {
         else {
             System.out.println("No hay plantillas cargadas. Queres crear una?");
             // todo si o no
-            plantilla = menuCrearNuevoTonreo();
+            plantilla = crearNuevoTorneo();
         }
         return plantilla;
     }
 
-    private static PlantillaCompetidores menuCrearNuevoTonreo(OrganizadorDeTorneos sistema) {
+    private PlantillaCompetidores crearNuevoTorneo() {
         String nombre = "";
         Categoria categoria = null;
         ArrayList<Competidor> busqueda;
@@ -146,7 +149,7 @@ public class Menu {
         int eleccion = 1;
         while(eleccion == 1){
             try {
-                categoria = menuElegirCategoria(sistema);
+                categoria = elegirCategoria();
             } catch (CategoriaInvalidaException e) {
                 throw new RuntimeException(e);      //todo tratamiento adecuado
             }
@@ -154,7 +157,7 @@ public class Menu {
             API miApi = accederAPI(categoria);
             if(miApi != null)
             {
-                nuevoCompetidor = menuCrearNuevoCompetidor();
+                nuevoCompetidor = crearNuevoCompetidor();
             }
             else{
                 try {
@@ -162,7 +165,7 @@ public class Menu {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                nuevoCompetidor = menuElegirResultadoBusqueda(busqueda);
+                nuevoCompetidor = elegirResultadoBusqueda(busqueda);
             }
             plantilla.agregarCompetidor(nuevoCompetidor);
         }
@@ -173,7 +176,7 @@ public class Menu {
 
     }
 
-    private static Competidor menuElegirResultadoBusqueda(ArrayList<Competidor> resultados) {
+    private Competidor elegirResultadoBusqueda(ArrayList<Competidor> resultados) {
         Competidor seleccion = null;
         int eleccion = 0;
 
@@ -183,7 +186,7 @@ public class Menu {
         return seleccion;
     }
 
-    private static Competidor menuCrearNuevoCompetidor() {
+    private Competidor crearNuevoCompetidor() {
 
         System.out.println("Ingrese nombre del competidor");
         String nombre = ""; //todo reemplazar por Scanner
@@ -193,7 +196,7 @@ public class Menu {
     }
 
     //TODO: completar opciones
-    private static API accederAPI(Categoria categoria) throws CategoriaInvalidaException {
+    private API accederAPI(Categoria categoria) throws CategoriaInvalidaException {
         return switch (categoria){
             case ANIME -> new AnimeAPI();
             case MANGA -> new MangaAPI();

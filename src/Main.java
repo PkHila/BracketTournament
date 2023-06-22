@@ -22,7 +22,7 @@ public class Main {
             resultados = new ArrayList<>();
         }
 
-        Menu.principal(plantillas, resultados);
+        new Menu().principal(plantillas, resultados);
         try { // fixme: determinar si es mejor todo el en mismo try catch
             controladorArchivoPlantillas.grabar(plantillas, "plantillas.bin");
         } catch (IOException ex) {
