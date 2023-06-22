@@ -23,7 +23,7 @@ public class OrganizadorDeTorneos implements Serializable {
         return plantilla;
     }
 
-    public PlantillaCompetidores buscarPlantilla(String nombre) throws Exception {
+    public PlantillaCompetidores buscarPlantilla(String nombre) throws Exception { // todo: sacar excepcion, que sea nulleable esta bien
         PlantillaCompetidores plantilla = plantillas.get(nombre);
         if(plantilla == null) {
             throw new Exception("TorneoNotFound");
@@ -55,17 +55,6 @@ public class OrganizadorDeTorneos implements Serializable {
             plantillas.put(plantilla.getNombre(), plantilla);
             respuesta = true;
         }
-        //fixme este codigo comentado se necesita??
-        /*
-        try {
-            buscarTorneo(torneo.getNombre());
-        }
-        catch (Exception e) {
-            Torneo t = torneos.put(torneo.getNombre(), torneo);
-            respuesta = true;
-        }
-        // esto es una manera organica de prevenir duplicados en un mapa, o hay mejores?
-        */
         return respuesta;
     }
 
