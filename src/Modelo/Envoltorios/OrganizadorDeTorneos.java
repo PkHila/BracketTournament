@@ -23,10 +23,10 @@ public class OrganizadorDeTorneos implements Serializable {
         return plantilla;
     }
 
-    public PlantillaCompetidores buscarPlantilla(String nombre) throws Exception { // todo: sacar excepcion, que sea nulleable esta bien
-        PlantillaCompetidores plantilla = plantillas.get(nombre);
-        if(plantilla == null) {
-            throw new Exception("TorneoNotFound");
+    public PlantillaCompetidores buscarPlantilla(String nombre) {
+        PlantillaCompetidores plantilla = null;
+        if(plantillas.containsKey(nombre)) {
+            plantilla = plantillas.get(nombre);
         }
         return plantilla;
     }
