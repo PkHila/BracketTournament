@@ -42,5 +42,7 @@ public class Main {
         AnimeAPI comp = new AnimeAPI();
         ArrayList<Competidor> competidores = comp.obtenerCompetidores("One Piece");
         System.out.println(competidores);
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

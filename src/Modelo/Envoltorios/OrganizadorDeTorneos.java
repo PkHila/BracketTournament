@@ -8,6 +8,7 @@ import Modelo.Resultados.Resultado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class OrganizadorDeTorneos implements Serializable {
@@ -29,12 +30,32 @@ public class OrganizadorDeTorneos implements Serializable {
         }
         return plantilla;
     }
+
+    public ArrayList<String> listarPlantillas(){
+        ArrayList<String> nombresDePlantillas = new ArrayList<>();
+        for (Map.Entry<String, PlantillaCompetidores> p : plantillas.entrySet()) {
+            nombresDePlantillas.add(p.getKey());
+        }
+        return nombresDePlantillas;
+    }
+
+    public ArrayList<String> listarPlantillas(Categoria categoria){
+        ArrayList<String> nombresDePlantillas = new ArrayList<>();
+        for (Map.Entry<String, PlantillaCompetidores> p : plantillas.entrySet()) {
+            if(p.getValue().getCategoria() == categoria){
+                nombresDePlantillas.add(p.getKey());
+            }
+        }
+        return nombresDePlantillas;
+    }
+
     public boolean agregarPlantilla(PlantillaCompetidores plantilla) {
         boolean respuesta = false;
         if(plantilla != null && !plantillas.containsKey(plantilla.getNombre())) {
             plantillas.put(plantilla.getNombre(), plantilla);
             respuesta = true;
         }
+        //fixme este codigo comentado se necesita??
         /*
         try {
             buscarTorneo(torneo.getNombre());
