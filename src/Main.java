@@ -1,7 +1,4 @@
-import Modelo.APIs.JuegosAPI;
-import Modelo.APIs.MangaAPI;
-import Modelo.APIs.PeliculasAPI;
-import Modelo.APIs.SeriesAPI;
+import Modelo.APIs.*;
 import Modelo.Competidor;
 
 import java.util.ArrayList;
@@ -42,8 +39,8 @@ public class Main {
 
         System.out.println(Categoria.PERSONALIZADA);*/
 
-        SeriesAPI comp = new SeriesAPI();
-        ArrayList<Competidor> competidores = comp.obtenerCompetidores("Teenage Mutant Ninja Turtles");
+        AnimeAPI comp = new AnimeAPI();
+        ArrayList<Competidor> competidores = comp.obtenerCompetidores("One Piece");
         System.out.println(competidores);
     }
 }

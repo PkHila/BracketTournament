@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public abstract class API {
 
    public ArrayList<Competidor> obtenerCompetidores(String terminoABuscar){
-      terminoABuscar = terminoABuscar.replaceAll(" ","%20");
+      terminoABuscar = terminoABuscar.replaceAll(" ","+");
       ArrayList<Competidor> topResultados = new ArrayList<>();
       String busqueda = construirQuery(terminoABuscar);
       try {
