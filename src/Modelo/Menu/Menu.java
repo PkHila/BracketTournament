@@ -1,12 +1,16 @@
 package Modelo.Menu;
 
+import Modelo.APIs.*;
 import Modelo.Categoria;
+import Modelo.Competidor;
 import Modelo.Envoltorios.OrganizadorDeTorneos;
+import Modelo.Excepciones.CategoriaInvalidaException;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
+import org.json.JSONException;
 
-import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -60,11 +64,24 @@ public class Menu {
 
     private static PlantillaCompetidores menuJugarDesdePlantilla(OrganizadorDeTorneos sistema) {
         int eleccion = 0;
+        Categoria categoria;
         PlantillaCompetidores plantilla = null;
         do {
             System.out.println("1 buscar por categoria 2 buscar por nombre 3 listar plantillas");
             switch (eleccion) {
-                case 1 -> plantilla = menuBuscarPorCategoria(sistema);
+                case 1: try{
+                    categoria = menuElegirCategoria(sistema);
+                }
+                catch (CategoriaInvalidaException e){
+                    System.out.println(e.getMessage());
+                }
+                    if(categoria != null) { //todo considerar hacer este bloque una nueva Excepción
+                        plantilla = menuListarPlantillas(sistema, true, categoria);
+                    }
+                    else {
+                        System.out.println("No se encontró la plantilla");
+                    }
+                    break;
                 case 2 -> plantilla = sistema.buscarPlantilla(""); // todo scanner nextLine
                 case 3 -> plantilla = menuListarPlantillas(sistema, false, null);
             }
@@ -72,9 +89,8 @@ public class Menu {
         return plantilla;
     }
 
-    private static PlantillaCompetidores menuBuscarPorCategoria(OrganizadorDeTorneos sistema) {
+    private static Categoria menuElegirCategoria(OrganizadorDeTorneos sistema) throws CategoriaInvalidaException {
         int eleccion = 0;
-        PlantillaCompetidores plantilla = null;
         Categoria categoria = null;
         do {
             System.out.println("1 Anime 2 Manga 3 Peliculas 4 Series 5 Juegos 6 Personalizada");
@@ -87,10 +103,10 @@ public class Menu {
                 case 6 -> categoria = Categoria.PERSONALIZADA;
             }
         } while (eleccion != 0);
-        if(eleccion != 0) {
-            plantilla = menuListarPlantillas(sistema, true, categoria);
+        if(categoria==null){
+            throw new CategoriaInvalidaException("La categoria es invalida. Categoria: ", categoria);
         }
-        return plantilla;
+        return categoria;
     }
 
     private static PlantillaCompetidores menuListarPlantillas(OrganizadorDeTorneos sistema, boolean porCategoria, Categoria categoria) {
@@ -123,6 +139,68 @@ public class Menu {
     }
 
     private static PlantillaCompetidores menuCrearNuevoTonreo(OrganizadorDeTorneos sistema) {
-        // todo: completar esto
+        String nombre = "";
+        Categoria categoria = null;
+        ArrayList<Competidor> busqueda;
+        Competidor nuevoCompetidor;
+        int eleccion = 1;
+        while(eleccion == 1){
+            try {
+                categoria = menuElegirCategoria(sistema);
+            } catch (CategoriaInvalidaException e) {
+                throw new RuntimeException(e);      //todo tratamiento adecuado
+            }
+            PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre,categoria);
+            API miApi = accederAPI(categoria);
+            if(miApi != null)
+            {
+                nuevoCompetidor = menuCrearNuevoCompetidor();
+            }
+            else{
+                try {
+                    busqueda = miApi.obtenerBusqueda("SCANNER"); //fixme reemplazar con Scanner
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                nuevoCompetidor = menuElegirResultadoBusqueda(busqueda);
+            }
+            plantilla.agregarCompetidor(nuevoCompetidor);
+        }
+
+
+
+
+
+    }
+
+    private static Competidor menuElegirResultadoBusqueda(ArrayList<Competidor> resultados) {
+        Competidor seleccion = null;
+        int eleccion = 0;
+
+        //todo aca va el scanner
+        System.out.println("0 cancelar");
+        seleccion = resultados.get(eleccion-1);
+        return seleccion;
+    }
+
+    private static Competidor menuCrearNuevoCompetidor() {
+
+        System.out.println("Ingrese nombre del competidor");
+        String nombre = ""; //todo reemplazar por Scanner
+        System.out.println("Ingrese una pieza de informacion sobre el competidor");
+        String info = ""; //todo reemplazar por Scanner
+        return new Competidor(nombre,info);
+    }
+
+    //TODO: completar opciones
+    private static API accederAPI(Categoria categoria) throws CategoriaInvalidaException {
+        return switch (categoria){
+            case ANIME -> new AnimeAPI();
+            case MANGA -> new MangaAPI();
+            case PELICULAS -> new PeliculasAPI();
+            case SERIES -> new SeriesAPI();
+            case JUEGOS -> new JuegosAPI();
+            case PERSONALIZADA -> throw new CategoriaInvalidaException("La categoria es invalida. Categoria: ", categoria);
+        };
     }
 }

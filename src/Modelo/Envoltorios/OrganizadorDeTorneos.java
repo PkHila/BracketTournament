@@ -139,13 +139,4 @@ public class OrganizadorDeTorneos implements Serializable {
         return resultado;
     }
 
-    //TODO: completar opciones
-    /*private ArrayList<Competidor> obtenerCompetidores(String terminoABuscar, Categoria categoria){
-        return switch (categoria){
-            case ANIME -> new AnimeAPI().obtenerCompetidores(terminoABuscar);
-            case MANGA -> new MangaAPI().obtenerCompetidores(terminoABuscar);
-            case PELICULAS -> null;
-        };
-    }*/
-
 }

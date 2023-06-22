@@ -1,6 +1,4 @@
-package Modelo.Resultados.ControladorArchivos;
-
-import Modelo.Resultados.Resultado;
+package Modelo.ControladorArchivos;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,8 +1,6 @@
-import Modelo.APIs.*;
-import Modelo.Competidor;
 import Modelo.Menu.Menu;
 import Modelo.PlantillaCompetidores;
-import Modelo.Resultados.ControladorArchivos.ControladorArchivos;
+import Modelo.ControladorArchivos.ControladorArchivos;
 import Modelo.Resultados.Resultado;
 import java.io.IOException;
 import java.util.ArrayList;
