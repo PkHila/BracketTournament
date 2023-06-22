@@ -139,4 +139,9 @@ public class OrganizadorDeTorneos implements Serializable {
         return resultado;
     }
 
+    public void inicializarPlantillas(ArrayList<PlantillaCompetidores> plantillasDeArchivo) {
+        for (PlantillaCompetidores plantilla: plantillasDeArchivo) {
+            plantillas.put(plantilla.getNombre(), plantilla);
+        }
+    }
 }

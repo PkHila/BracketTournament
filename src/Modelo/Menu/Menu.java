@@ -25,7 +25,7 @@ public class Menu {
     public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
-        sistema.init(plantillas, resultados); // todo traer data de archivos al mapa de plantillas y tal vez resultados que no tenemos coleccion
+        sistema.inicializarPlantillas(plantillas);
         do {
             System.out.println("1 jugar torneo 2 administrar plantillas");
             eleccion = Integer.parseInt(scanner.nextLine());
