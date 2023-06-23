@@ -28,6 +28,17 @@ public class PlantillaCompetidores implements Serializable{
     public boolean agregarCompetidor(Competidor nuevoCompetidor){
         return listaCompetidores.add(nuevoCompetidor);
     }
+    public boolean eliminarCompetidor(Competidor competidor) {
+        return listaCompetidores.remove(competidor);
+    }
+    public boolean eliminarCompetidor(String nombre) {
+        boolean respuesta = false;
+        if(listaCompetidores.contains(nombre)) {
+            listaCompetidores.remove(new Competidor(nombre));
+            respuesta = true;
+        }
+        return respuesta;
+    }
 
     public int getCantElementos() {
         return listaCompetidores.size();
