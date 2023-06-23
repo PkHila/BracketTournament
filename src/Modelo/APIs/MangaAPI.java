@@ -19,7 +19,7 @@ public class MangaAPI extends API{
     public Competidor competidorDesdeJSON(JSONObject j) throws JSONException {
         Competidor nuevo = new Competidor();
         nuevo.setNombre(j.getString("title_english"));
-        nuevo.setInfo(j.getString("synopsis"));
+        nuevo.setInfo(j.getString("year"));
         return nuevo;
     }
 

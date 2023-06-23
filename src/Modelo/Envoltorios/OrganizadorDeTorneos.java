@@ -101,8 +101,6 @@ public class OrganizadorDeTorneos implements Serializable {
             i++;
         }
 
-        // System.out.println("Ronda: \n" + ronda); //test
-
         return ronda;
     }
 
