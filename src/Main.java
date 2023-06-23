@@ -22,17 +22,24 @@ public class Main {
             resultados = new ArrayList<>();
         }
 
-        new Menu().principal(plantillas, resultados);
         try {
-            controladorArchivoPlantillas.grabar(plantillas, "plantillas.bin");
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            new Menu().principal(plantillas, resultados);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        try {
-            controladorArchivoResultados.grabar(resultados, "resultados.bin");
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        finally {
+            try {
+                controladorArchivoPlantillas.grabar(plantillas, "plantillas.bin");
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+            try {
+                controladorArchivoResultados.grabar(resultados, "resultados.bin");
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
+
         /*
         //Test de funcionamiento básico
         Competidor competidorA = new Competidor("The Beatles");
