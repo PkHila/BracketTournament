@@ -30,8 +30,8 @@ public class Menu {
             System.out.println("1 jugar torneo 2 administrar torneos");
             eleccion = scanner.nextInt();
             switch (eleccion) {
-                case 1 -> jugarTorneo(resultados);
-                case 2 -> administrarTorneos();
+                case 1 -> jugarTorneo(resultados, plantillas);
+                case 2 -> administrarTorneos(plantillas);
                 case 0 -> System.out.println("Cerrando...");
                 default -> System.out.println("Opción invalida");
             }
@@ -39,7 +39,7 @@ public class Menu {
         scanner.close();
     }
 
-    private void administrarTorneos() {
+    private void administrarTorneos(ArrayList<PlantillaCompetidores> plantillas) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
@@ -49,6 +49,7 @@ public class Menu {
                 case 1 -> {
                     plantilla = crearNuevoTorneo();
                     sistema.agregarPlantilla(plantilla);
+                    plantillas.add(plantilla);
                 }
                 case 2 -> {
                     plantilla = elegirPlantilla();
@@ -89,7 +90,7 @@ public class Menu {
         }
     }
 
-    private void jugarTorneo(ArrayList<Resultado> resultados) {
+    private void jugarTorneo(ArrayList<Resultado> resultados, ArrayList<PlantillaCompetidores> plantillas) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
@@ -102,6 +103,7 @@ public class Menu {
 
             }
             if(plantilla != null) {
+                plantillas.add(plantilla);
                 try {
                     Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
                     resultados.add(resultado);
