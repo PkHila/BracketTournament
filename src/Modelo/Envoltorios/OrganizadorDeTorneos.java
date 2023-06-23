@@ -118,7 +118,7 @@ public class OrganizadorDeTorneos implements Serializable {
 
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
-        int voto = 1;
+        int voto = 0;
 
         for(int i = 0; i<cantidadRondas; i++){
             //Le agrego la primera ronda para testear
@@ -128,10 +128,11 @@ public class OrganizadorDeTorneos implements Serializable {
             arregloCompetidores.clear();
 
             for(Enfrentamiento enfrentamiento : rondas.get(i)){
-                while(voto < 0 || voto >= enfrentamiento.getCantCompetidores()){
+                do{
                     System.out.println(enfrentamiento + "\nIngrese el numero de candidato a votar:");
                     voto = scan.nextInt();
-                }
+                }while(voto < 1 || voto > enfrentamiento.getCantCompetidores());
+
                 enfrentamiento.votar(voto);
 
 
