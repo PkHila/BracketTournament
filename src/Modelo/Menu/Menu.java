@@ -252,22 +252,23 @@ public class Menu {
         }
 
         for (int i = 0; i < listaPlantillas.size(); i++) {
-            System.out.println((i+1) + ": " + listaPlantillas.get(i));
+            System.out.println(i+1 + ": " + listaPlantillas.get(i) + "\n");
         }
         if(listaPlantillas.size() != 0) {
             System.out.println("elegir plantilla:");
             eleccion = scanner.nextInt();
-            if(eleccion > 0 && eleccion <= listaPlantillas.size()){
-                String nombre = listaPlantillas.get(eleccion-1);
-                plantilla = sistema.buscarPlantilla(nombre);
-            }
-            else {
-                throw new IndexOutOfBoundsException();
-            }
-
+            String nombre = listaPlantillas.get(eleccion-1);
+            plantilla = sistema.buscarPlantilla(nombre);
         }
         else {
             System.out.println("No hay plantillas cargadas");
+            /*System.out.println("No hay plantillas cargadas. Queres crear una?\n1. Sí\n2. No");
+            eleccion = scanner.nextInt();
+            if(eleccion == 1) {
+                plantilla = crearNuevoTorneo();
+            }*/
+            //todo ver si sacar esto
+            
         }
         return plantilla;
     }
