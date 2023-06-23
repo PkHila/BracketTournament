@@ -6,9 +6,7 @@ import Modelo.APIs.MangaAPI;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Resultados.Resultado;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class OrganizadorDeTorneos implements Serializable {
     private HashMap<String, PlantillaCompetidores> plantillas;
@@ -17,34 +15,48 @@ public class OrganizadorDeTorneos implements Serializable {
         plantillas = new HashMap<>();
     }
 
+    public OrganizadorDeTorneos(ArrayList<PlantillaCompetidores> plantillas) {
+        this.plantillas = new HashMap<>();
+        inicializarPlantillas(plantillas);
+    }
+
     public PlantillaCompetidores crearPlantilla(String nombre, Categoria categoria) {
         PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre, categoria);
         return plantilla;
     }
 
-    public PlantillaCompetidores buscarPlantilla(String nombre) throws Exception {
-        PlantillaCompetidores plantilla = plantillas.get(nombre);
-        if(plantilla == null) {
-            throw new Exception("TorneoNotFound");
+    public PlantillaCompetidores buscarPlantilla(String nombre) {
+        PlantillaCompetidores plantilla = null;
+        if(plantillas.containsKey(nombre)) {
+            plantilla = plantillas.get(nombre);
         }
         return plantilla;
     }
+
+    public ArrayList<String> listarPlantillas(){
+        ArrayList<String> nombresDePlantillas = new ArrayList<>();
+        for (Map.Entry<String, PlantillaCompetidores> p : plantillas.entrySet()) {
+            nombresDePlantillas.add(p.getKey());
+        }
+        return nombresDePlantillas;
+    }
+
+    public ArrayList<String> listarPlantillas(Categoria categoria){
+        ArrayList<String> nombresDePlantillas = new ArrayList<>();
+        for (Map.Entry<String, PlantillaCompetidores> p : plantillas.entrySet()) {
+            if(p.getValue().getCategoria() == categoria){
+                nombresDePlantillas.add(p.getKey());
+            }
+        }
+        return nombresDePlantillas;
+    }
+
     public boolean agregarPlantilla(PlantillaCompetidores plantilla) {
         boolean respuesta = false;
         if(plantilla != null && !plantillas.containsKey(plantilla.getNombre())) {
             plantillas.put(plantilla.getNombre(), plantilla);
             respuesta = true;
         }
-        /*
-        try {
-            buscarTorneo(torneo.getNombre());
-        }
-        catch (Exception e) {
-            Torneo t = torneos.put(torneo.getNombre(), torneo);
-            respuesta = true;
-        }
-        // esto es una manera organica de prevenir duplicados en un mapa, o hay mejores?
-        */
         return respuesta;
     }
 
@@ -89,26 +101,24 @@ public class OrganizadorDeTorneos implements Serializable {
             i++;
         }
 
-        // System.out.println("Ronda: \n" + ronda); //test
-
         return ronda;
     }
 
-    public Resultado jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
+    public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan, int limite) throws CompetidoresInsuficientesException {
         Resultado resultado = new Resultado(competidores.getNombre(), competidores.getCategoria());
         Competidor ganador = null;
 
         //paso los competidores de la plantilla a un arreglo
         ArrayList<Competidor> arregloCompetidores;
-        arregloCompetidores = competidores.copiarAlArray();
+        arregloCompetidores = competidores.copiarAlArray(limite);
 
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
         resultado.setCantidadDeRondas(cantidadRondas);
 
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
+        int voto = 0;
 
-        //----------------------------------------------------------------------------------//
         for(int i = 0; i<cantidadRondas; i++){
             //Le agrego la primera ronda para testear
             rondas.add(crearRonda(arregloCompetidores));
@@ -116,26 +126,41 @@ public class OrganizadorDeTorneos implements Serializable {
             //Vacío el arreglo de Competidores
             arregloCompetidores.clear();
 
-            Random rand = new Random();//!!!Para testear. Remover luego!!!
             for(Enfrentamiento enfrentamiento : rondas.get(i)){
-                enfrentamiento.votar(rand.nextInt(2));
+                do{
+                    System.out.println(enfrentamiento + "\nIngrese el numero de candidato a votar:");
+                    voto = scan.nextInt();
+                }while(voto < 1 || voto > enfrentamiento.getCantCompetidores());
+
+                enfrentamiento.votar(voto);
+
+
                 ganador = enfrentamiento.getGanador();
-                resultado.agregarEliminado(ganador, enfrentamiento.getPerdedor(), i);
+                for (int j = 1; j < enfrentamiento.getCantCompetidores(); j++) {
+                    resultado.agregarEliminado(ganador, enfrentamiento.getPerdedor(j), i);
+                }
                 arregloCompetidores.add(ganador);
             }
-            resultado.setGanador(ganador);
         }
-
+        resultado.setGanador(ganador);
         return resultado;
     }
+    public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan) throws CompetidoresInsuficientesException {
+        return jugarTorneo(competidores, scan, 16);
+    }
 
-    //TODO: completar opciones
-    /*private ArrayList<Competidor> obtenerCompetidores(String terminoABuscar, Categoria categoria){
-        return switch (categoria){
-            case ANIME -> new AnimeAPI().obtenerCompetidores(terminoABuscar);
-            case MANGA -> new MangaAPI().obtenerCompetidores(terminoABuscar);
-            case PELICULAS -> null;
-        };
-    }*/
 
+
+    public void inicializarPlantillas(ArrayList<PlantillaCompetidores> plantillasDeArchivo) {
+        for (PlantillaCompetidores plantilla: plantillasDeArchivo) {
+            plantillas.put(plantilla.getNombre(), plantilla);
+        }
+    }
+
+    public void pasarPlantillasAlArray(ArrayList<PlantillaCompetidores> plantillas) {
+        Iterator<Map.Entry<String, PlantillaCompetidores>> it = this.plantillas.entrySet().iterator();
+        while (it.hasNext()) {
+            plantillas.add(it.next().getValue());
+        }
+    }
 }

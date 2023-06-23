@@ -10,21 +10,17 @@ import java.util.ArrayList;
 
 public abstract class API {
 
-   public ArrayList<Competidor> obtenerCompetidores(String terminoABuscar){
-      terminoABuscar = terminoABuscar.replaceAll(" ","%20");
+   public ArrayList<Competidor> obtenerBusqueda(String terminoABuscar) throws JSONException{
+      terminoABuscar = terminoABuscar.replaceAll(" ","+");
       ArrayList<Competidor> topResultados = new ArrayList<>();
       String busqueda = construirQuery(terminoABuscar);
-      try {
+
          JSONObject resultados = new JSONObject(ConsumoAPI.getInfo(busqueda));
          JSONArray arregloResultados = arregloDesdeJSON(resultados);
          for (int i = 0; i < arregloResultados.length() && i < 10; i++) {
             Competidor nuevo = competidorDesdeJSON(arregloResultados.getJSONObject(i));
             topResultados.add(nuevo);
          }
-
-      } catch (JSONException e) { //todo: implementar tratamiento de excepción o throw
-         throw new RuntimeException(e);
-      }
 
       return topResultados;
    }

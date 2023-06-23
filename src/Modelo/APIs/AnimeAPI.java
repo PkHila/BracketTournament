@@ -17,15 +17,9 @@ public class AnimeAPI extends API{
 
     public Competidor competidorDesdeJSON(JSONObject j) throws JSONException {
         Competidor nuevo = new Competidor();
-        nuevo.setNombre(j.getString("title"));
-        nuevo.setInfo(j.getString("synopsis"));
-        //todo implementar o borrar estos atributos
-        /*
-        JSONObject aired = j.getJSONObject("aired");
-        anime.setAnioDeLanzamiento(j.getInt("year");
-        JSONObject images = j.getJSONObject("images");
-        JSONObject jpg = images.getJSONObject("jpg");
-        setImagen(jpg.getString("image_url"));*/
+        nuevo.setNombre(j.getString("title_english"));
+        int year = j.getInt("year");
+        nuevo.setInfo(String.valueOf(year));
         return nuevo;
     }
 

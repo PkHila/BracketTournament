@@ -28,20 +28,31 @@ public class PlantillaCompetidores implements Serializable{
     public boolean agregarCompetidor(Competidor nuevoCompetidor){
         return listaCompetidores.add(nuevoCompetidor);
     }
+    public boolean eliminarCompetidor(Competidor competidor) {
+        return listaCompetidores.remove(competidor);
+    }
+    public boolean eliminarCompetidor(String nombre) {
+        boolean respuesta = false;
+        if(listaCompetidores.contains(nombre)) {
+            listaCompetidores.remove(new Competidor(nombre));
+            respuesta = true;
+        }
+        return respuesta;
+    }
 
     public int getCantElementos() {
         return listaCompetidores.size();
     }
 
 
-    public ArrayList<Competidor> copiarAlArray() throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
+    public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
         if(!potenciaDeDos(listaCompetidores.size())) {
             throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
         }
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         int cantidadDeCompetidores = 0;
-        while (it.hasNext() && cantidadDeCompetidores < 16) {
+        while (it.hasNext() && cantidadDeCompetidores < limite) {
             Competidor aux = it.next();
             Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
             arrayCompetidores.add(competidor);
@@ -49,6 +60,16 @@ public class PlantillaCompetidores implements Serializable{
         }
         Collections.shuffle(arrayCompetidores);
         return arrayCompetidores;
+    }
+
+    public String listarCompetidores() { // posible listarNombresDeCompetidores()
+        StringBuilder stringBuilder = new StringBuilder();
+        Iterator<Competidor> it = listaCompetidores.iterator();
+        stringBuilder.append(" - ");
+        while (it.hasNext()) {
+            stringBuilder.append(it.next().getNombre() + " - ");
+        }
+        return stringBuilder.toString();
     }
 
 
@@ -62,5 +83,5 @@ public class PlantillaCompetidores implements Serializable{
     @Override
     public String toString() {
         return "Torneo: " + nombre + ", categoria:'" + categoria + "\n" + listaCompetidores;
-    }
+    } //todo mostrar los competidores uno por uno, sin usar el toString de HashSet
 }

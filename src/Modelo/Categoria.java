@@ -2,16 +2,22 @@ package Modelo;
 
 public enum Categoria {
 
-    ANIME("Anime"), MANGA("Manga"), PELICULAS("Peliculas"),
-    SERIES("Series"), JUEGOS("Juegos"), PERSONALIZADA("Personalizada");
+    ANIME("Anime",1), MANGA("Manga",2), PELICULAS("Peliculas",3),
+    SERIES("Series",4), JUEGOS("Juegos",5), PERSONALIZADA("Personalizada",6);
 
     private final String nombre;
+    private final int id;
 
     public String getNombre() {
         return nombre;
     }
 
-    private Categoria(String nombre) {
+    public int getId() {
+        return id;
+    }
+
+    private Categoria(String nombre, int id) {
         this.nombre = nombre;
+        this.id = id;
     }
 }

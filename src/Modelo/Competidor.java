@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Competidor{
@@ -44,7 +45,8 @@ public class Competidor{
 
     @Override
     public String toString() {
-        return "Competidor:\n" +
-                "nombre: " + nombre + ", info: " + info + "\n";
+        String s = "";
+        s = s.concat("Competidor:\n" + "nombre: " + nombre + ", info: " + info);
+        return s;
     }
 }
