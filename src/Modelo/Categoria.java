@@ -1,5 +1,8 @@
 package Modelo;
 
+/**
+ * Enumeración de categorías
+ */
 public enum Categoria {
 
     ANIME("Anime",1), MANGA("Manga",2), PELICULAS("Peliculas",3),

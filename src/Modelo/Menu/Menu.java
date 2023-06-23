@@ -14,15 +14,26 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Clase utilitaria que representa el flujo de control del programa
+ */
 public class Menu {
     private Scanner scanner;
     private OrganizadorDeTorneos sistema;
 
+    /**
+     * Se intancia un menu con valores predeterminados
+     */
     public Menu() {
         scanner = new Scanner(System.in);
         sistema = new OrganizadorDeTorneos();
     }
 
+    /**
+     * Menu raíz, recibe colecciones de plantillas y resultados leídos desde archivos.
+     * @param plantillas ArrayList proveniente de archivo de plantillas
+     * @param resultados ArrayList proveniente de archivo de resultados
+     */
     public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
         sistema.inicializarPlantillas(plantillas);
@@ -48,6 +59,9 @@ public class Menu {
         sistema.pasarPlantillasAlArray(plantillas);
     }
 
+    /**
+     * Menu de administración de Torneos/Plantillas, permite ABM
+     */
     private void administrarTorneos() {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
@@ -76,6 +90,10 @@ public class Menu {
         } while (!salir);
     }
 
+    /**
+     * Menu para modificar una Plantilla, permite agregar o eliminar competidores
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     */
     private void modificarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
         boolean salir = true;
@@ -98,6 +116,10 @@ public class Menu {
         } while (!salir);
     }
 
+    /**
+     * Dependiendo de input, puede borrar una plantilla del sistema
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     */
     private void borrarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
         System.out.println("borrar plantilla:\n" + plantilla);
@@ -111,6 +133,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu para jugar un torneo, se puede elegir una Plantilla para jugar o crear una nueva, también se puede volver atrás sin efectos secundarios
+     * @param resultados ArrayList proveniente de archivo de resultados
+     */
     private void jugarTorneo(ArrayList<Resultado> resultados) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
@@ -142,6 +168,12 @@ public class Menu {
 
     }
 
+    /**
+     * Ante la excepción de competidores insuficientes, se ofrece tratamiento para jugar un torneo con menos Competidores o agregar hasta que sean suficientes
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     * @param scanner Scanner
+     * @param resultados ArrayList proveniente de archivo de resultados
+     */
     private void tratarCompetidoresInsuficientes(PlantillaCompetidores plantilla, Scanner scanner, ArrayList<Resultado> resultados) {
         System.out.println("Competidores insuficientes: " + "actualmente " + plantilla.getCantElementos());
         int eleccion = 0;
@@ -180,6 +212,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Menu de eleccion de plantilla, redirige a buscar por categoría, por nombre o listar las plantillas existentes
+     * @return una plantilla a fines de ser jugada, modificada o eliminada
+     */
     private PlantillaCompetidores elegirPlantilla() {
         int eleccion = 0;
         Categoria categoria = null;
@@ -214,6 +250,11 @@ public class Menu {
         return plantilla;
     }
 
+    /**
+     * Menu de elección de categoría
+     * @return una Categoria dentro de la enumeración
+     * @throws CategoriaInvalidaException si el input resultara fuera de la enumeración
+     */
     private Categoria elegirCategoria() throws CategoriaInvalidaException {
         int eleccion = 0;
         Categoria categoria = null;
@@ -228,6 +269,11 @@ public class Menu {
         return categoria;
     }
 
+    /**
+     * Conversión de int id a Categoría
+     * @param id id mapping
+     * @return una Categoría dentro de la enumeración o null si está fuera
+     */
     private Categoria getCategoria(int id){
         return switch (id) {
             case 1 -> Categoria.ANIME;
@@ -240,6 +286,12 @@ public class Menu {
         };
     }
 
+    /**
+     * Menu de eleccion de plantillas, presenta una plantilla enumerada y pide input para seleccionar
+     * @param porCategoria filtrar o no por categoría
+     * @param categoria una categoría concreta o null
+     * @return una Plantilla dentro del sistema
+     */
     private PlantillaCompetidores listarPlantillas(boolean porCategoria, Categoria categoria) {
         PlantillaCompetidores plantilla = null;
         int eleccion = 0;
@@ -282,6 +334,10 @@ public class Menu {
         return plantilla;
     }
 
+    /**
+     * Instancia una nueva plantilla y dependiendo del input agrega al menos un mínimo de 4 Competidores
+     * @return una Plantilla con todos sus campos y un mínimo de 4 Competidores
+     */
     private PlantillaCompetidores crearNuevoTorneo() {
         System.out.println("Crear nueva plantilla:\n");
         scanner.nextLine();
@@ -318,6 +374,11 @@ public class Menu {
         return plantilla;
     }
 
+    /**
+     * Dada una lista de Competidores dependiendo del input, retorna uno en particular
+     * @param resultados ArrayList proveniente de archivo de resultados
+     * @return el Competidor elegido por input
+     */
     private Competidor elegirResultadoBusqueda(ArrayList<Competidor> resultados) {
         Competidor seleccion;
         int eleccion = 0;
@@ -333,6 +394,10 @@ public class Menu {
         return seleccion;
     }
 
+    /**
+     * Instancia un nuevo Competidor con información recibida por input
+     * @return un competidor con información recibida por input
+     */
     private Competidor crearCompetidorPersonalizado() {
 
         scanner.nextLine();
@@ -343,6 +408,11 @@ public class Menu {
         return new Competidor(nombre,info);
     }
 
+    /**
+     * Agrega a un Competidor a la plantilla recibida
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     * @throws QueryVaciaException si hay una busqueda y produce cero resultados
+     */
     private void agregarCompetidor(PlantillaCompetidores plantilla) throws QueryVaciaException{
         Competidor nuevoCompetidor;
         API miApi = accederAPI(plantilla.getCategoria());
@@ -365,6 +435,10 @@ public class Menu {
         plantilla.agregarCompetidor(nuevoCompetidor);
     }
 
+    /**
+     * Lista los competidores de una Plantilla y luego intenta eliminar un competidor recibido por input
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     */
     private void eliminarCompetidor(PlantillaCompetidores plantilla) {
         scanner.nextLine();
         System.out.println("escriba un nombre de la lista o cualquier otra cosa para cancelar");
@@ -374,6 +448,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Instancia una API según la categoría correspondiente
+     * @param categoria una categoría concreta o null
+     * @return una instancia de una de las clases que heredan de API
+     */
     private API accederAPI(Categoria categoria){
         return switch (categoria){
             case ANIME -> new AnimeAPI();
@@ -385,6 +464,10 @@ public class Menu {
         };
     }
 
+    /**
+     * Muestra los resultados almacenados
+     * @param resultados ArrayList proveniente de archivo de resultados
+     */
     private void listarResultados(ArrayList<Resultado> resultados){
         for (Resultado r: resultados) {
             System.out.println(r+"\n");
