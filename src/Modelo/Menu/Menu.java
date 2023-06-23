@@ -25,19 +25,21 @@ public class Menu {
     public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos(plantillas);
+        plantillas.clear();
         do {
             System.out.println("1 jugar torneo 2 administrar torneos");
             eleccion = scanner.nextInt();
             switch (eleccion) {
-                case 1 -> jugarTorneo(resultados, plantillas);
-                case 2 -> administrarTorneos(plantillas);
+                case 1 -> jugarTorneo(resultados);
+                case 2 -> administrarTorneos();
                 case 0 -> System.out.println("Cerrando...");
                 default -> System.out.println("Opción invalida");
             }
         } while (eleccion != 0);
+        sistema.pasarPlantillasAlArray(plantillas);
     }
 
-    private void administrarTorneos(ArrayList<PlantillaCompetidores> plantillas) {
+    private void administrarTorneos() {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
@@ -47,7 +49,6 @@ public class Menu {
                 case 1 -> {
                     plantilla = crearNuevoTorneo();
                     sistema.agregarPlantilla(plantilla);
-                    plantillas.add(plantilla);
                 }
                 case 2 -> {
                     plantilla = elegirPlantilla();
@@ -88,7 +89,7 @@ public class Menu {
         }
     }
 
-    private void jugarTorneo(ArrayList<Resultado> resultados, ArrayList<PlantillaCompetidores> plantillas) {
+    private void jugarTorneo(ArrayList<Resultado> resultados) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
@@ -101,7 +102,6 @@ public class Menu {
 
             }
             if(plantilla != null) {
-                plantillas.add(plantilla);
                 try {
                     Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
                     resultados.add(resultado);

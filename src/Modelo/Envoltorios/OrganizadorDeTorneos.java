@@ -156,4 +156,11 @@ public class OrganizadorDeTorneos implements Serializable {
             plantillas.put(plantilla.getNombre(), plantilla);
         }
     }
+
+    public void pasarPlantillasAlArray(ArrayList<PlantillaCompetidores> plantillas) {
+        Iterator<Map.Entry<String, PlantillaCompetidores>> it = this.plantillas.entrySet().iterator();
+        while (it.hasNext()) {
+            plantillas.add(it.next().getValue());
+        }
+    }
 }
