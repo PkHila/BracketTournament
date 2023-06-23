@@ -24,8 +24,7 @@ public class Menu {
 
     public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
-        OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
-        sistema.inicializarPlantillas(plantillas);
+        OrganizadorDeTorneos sistema = new OrganizadorDeTorneos(plantillas);
         do {
             System.out.println("1 jugar torneo 2 administrar torneos");
             eleccion = scanner.nextInt();
@@ -36,7 +35,6 @@ public class Menu {
                 default -> System.out.println("Opción invalida");
             }
         } while (eleccion != 0);
-        scanner.close();
     }
 
     private void administrarTorneos(ArrayList<PlantillaCompetidores> plantillas) {
@@ -204,7 +202,7 @@ public class Menu {
     }
 
     private PlantillaCompetidores listarPlantillas(boolean porCategoria, Categoria categoria) {
-        PlantillaCompetidores plantilla;
+        PlantillaCompetidores plantilla = null;
         int eleccion = 0;
         ArrayList<String> listaPlantillas;
         if(porCategoria) {
@@ -225,8 +223,11 @@ public class Menu {
         }
         else {
             System.out.println("No hay plantillas cargadas. Queres crear una?\n 1. Sí\n2. No");
-            scanner.nextInt();
-            plantilla = crearNuevoTorneo();
+            eleccion = scanner.nextInt();
+            if(eleccion == 1) {
+                plantilla = crearNuevoTorneo();
+            }
+            
         }
         return plantilla;
     }
@@ -269,9 +270,10 @@ public class Menu {
         for (int i = 0; i < resultados.size(); i++) {
             System.out.println("["+ (i+1) + "]" +resultados.get(i));
         }
-        System.out.println("Ingrese el elemento que quiere agregar:");
-        scanner.nextInt();
-        //fixme validar que la eleccion no esté OOB
+        while(eleccion <= 0 || eleccion > resultados.size()){
+            System.out.println("Ingrese el elemento que quiere agregar:");
+            eleccion = scanner.nextInt();
+        }
 
         seleccion = resultados.get(eleccion-1);
         return seleccion;
