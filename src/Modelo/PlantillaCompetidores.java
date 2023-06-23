@@ -112,5 +112,5 @@ public class PlantillaCompetidores implements Serializable, IEntradaSalida<Compe
     @Override
     public String toString() {
         return "Torneo: " + nombre + ", categoria:'" + categoria + "\n" + listaCompetidores;
-    } //todo mostrar los competidores uno por uno, sin usar el toString de HashSet
+    }
 }
