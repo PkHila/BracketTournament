@@ -27,6 +27,7 @@ public class Menu {
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos(plantillas);
         plantillas.clear();
         do {
+            System.out.println("Menu principal");
             System.out.println("1 jugar torneo 2 administrar torneos");
             eleccion = scanner.nextInt();
             switch (eleccion) {
@@ -43,6 +44,7 @@ public class Menu {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
+            System.out.println("Menu administrar torneos");
             System.out.println("1 crear torneo 2 borrar torneo 3 modificar torneo");
             eleccion = scanner.nextInt();
             switch (eleccion) {
@@ -66,7 +68,7 @@ public class Menu {
     private void modificarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
         do {
-            System.out.println(plantilla);
+            System.out.println("modificar plantilla:\n" + plantilla);
             System.out.println("1 agregar competidor 2 eliminar competidor");
             eleccion = scanner.nextInt();
             switch (eleccion) {
@@ -78,7 +80,7 @@ public class Menu {
 
     private void borrarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
-        System.out.println(plantilla);
+        System.out.println("borrar plantilla:\n" + plantilla);
         System.out.println("Estas seguro que queres borrar este torneo?\n 1. Sí\n2. No");
         eleccion = scanner.nextInt();
         if (eleccion == 1) {
@@ -93,6 +95,7 @@ public class Menu {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
+            System.out.println("Menu jugar torneo");
             System.out.println("1 jugar torneo desde plantilla 2 crear nuevo torneo");
             eleccion = scanner.nextInt();
 
@@ -150,6 +153,7 @@ public class Menu {
         Categoria categoria = null;
         PlantillaCompetidores plantilla = null;
         do {
+            System.out.println("Eleccion de plantilla:");
             System.out.println("1 buscar por categoria 2 buscar por nombre 3 listar plantillas");
             eleccion = scanner.nextInt();
             switch (eleccion) {
@@ -178,7 +182,7 @@ public class Menu {
     private Categoria elegirCategoria() throws CategoriaInvalidaException {
         int eleccion = 0;
         Categoria categoria = null;
-
+        System.out.println("Eleccion de categoría:");
         System.out.println("1 Anime 2 Manga 3 Peliculas 4 Series 5 Juegos 6 Personalizada");
         eleccion = scanner.nextInt();
         categoria = getCategoria(eleccion);
