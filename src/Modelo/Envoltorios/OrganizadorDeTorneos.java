@@ -16,6 +16,7 @@ public class OrganizadorDeTorneos implements Serializable {
     }
 
     public OrganizadorDeTorneos(ArrayList<PlantillaCompetidores> plantillas) {
+        this.plantillas = new HashMap<>();
         inicializarPlantillas(plantillas);
     }
 

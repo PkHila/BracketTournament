@@ -24,7 +24,7 @@ public class Menu {
 
     public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
-        OrganizadorDeTorneos sistema = new OrganizadorDeTorneos(plantillas);
+        sistema.inicializarPlantillas(plantillas);
         plantillas.clear();
         do {
             System.out.println("Menu principal");
@@ -54,13 +54,13 @@ public class Menu {
                 }
                 case 2 -> {
                     plantilla = elegirPlantilla();
-                    borrarPlantilla(plantilla);
+                    if(plantilla != null) borrarPlantilla(plantilla);
+
                 }
                 case 3 -> {
                     plantilla = elegirPlantilla();
-                    modificarPlantilla(plantilla);
+                    if(plantilla != null) modificarPlantilla(plantilla);
                 }
-
             }
         } while (eleccion != 0);
     }
@@ -227,7 +227,7 @@ public class Menu {
             plantilla = sistema.buscarPlantilla(nombre);
         }
         else {
-            System.out.println("No hay plantillas cargadas. Queres crear una?\n 1. Sí\n2. No");
+            System.out.println("No hay plantillas cargadas. Queres crear una?\n1. Sí\n2. No");
             eleccion = scanner.nextInt();
             if(eleccion == 1) {
                 plantilla = crearNuevoTorneo();
