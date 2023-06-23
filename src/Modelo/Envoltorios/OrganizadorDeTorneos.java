@@ -8,7 +8,7 @@ import Modelo.Resultados.Resultado;
 import java.io.Serializable;
 import java.util.*;
 
-public class OrganizadorDeTorneos implements Serializable {
+public class OrganizadorDeTorneos{
     private HashMap<String, PlantillaCompetidores> plantillas;
 
     public OrganizadorDeTorneos() {
