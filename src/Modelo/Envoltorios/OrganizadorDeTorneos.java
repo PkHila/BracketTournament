@@ -14,7 +14,7 @@ import java.util.*;
  * Clase envoltorio de la coleccion de plantillas de competidores
  * Tiene las reglas de negocio de las plantillas, permite su creacion, eliminacion y modificacion
  */
-public class OrganizadorDeTorneos implements Serializable {
+public class OrganizadorDeTorneos {
     private HashMap<String, PlantillaCompetidores> plantillas;
 
     /**

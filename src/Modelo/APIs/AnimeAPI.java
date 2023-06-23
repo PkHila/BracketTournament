@@ -12,14 +12,15 @@ public class AnimeAPI extends API{
 
 
     public String construirQuery(String terminoABuscar){
-        return "https://api.jikan.moe/v4/anime?q=" + terminoABuscar + "&sfw&limit=5";
+        return "https://api.jikan.moe/v4/anime?q=" + terminoABuscar + "&sfw&limit=5&status=complete";
     }
 
     public Competidor competidorDesdeJSON(JSONObject j) throws JSONException {
         Competidor nuevo = new Competidor();
-        nuevo.setNombre(j.getString("title_english"));
-        int year = j.getInt("year");
-        nuevo.setInfo(String.valueOf(year));
+        nuevo.setNombre(j.getString("title"));
+        JSONObject aired = j.getJSONObject("aired");
+        String [] from = aired.getString("from").split("-");
+        nuevo.setInfo(from[0]);
         return nuevo;
     }
 

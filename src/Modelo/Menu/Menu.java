@@ -6,6 +6,7 @@ import Modelo.Competidor;
 import Modelo.Envoltorios.OrganizadorDeTorneos;
 import Modelo.Excepciones.CategoriaInvalidaException;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
+import Modelo.Excepciones.QueryVaciaException;
 import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
 import org.json.JSONException;
@@ -102,7 +103,13 @@ public class Menu {
             System.out.println("[1] Agregar competidor \n[2] Eliminar competidor\n[0] Salir");
             eleccion = scanner.nextInt();
             switch (eleccion) {
-                case 1 -> agregarCompetidor(plantilla);
+                case 1 -> {
+                    try{
+                        agregarCompetidor(plantilla);
+                    } catch (QueryVaciaException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
                 case 2 -> eliminarCompetidor(plantilla);
                 default -> salir = true;
             }
@@ -181,8 +188,13 @@ public class Menu {
                 }
                 case 2 -> {
                     while (cantidadParaJugar != 8 && cantidadParaJugar != 16) {
-                        agregarCompetidor(plantilla);
-                        cantidadParaJugar++;
+                        try{
+                            agregarCompetidor(plantilla);
+                            cantidadParaJugar++;
+                        } catch (QueryVaciaException e){
+                            System.out.println(e.getMessage());
+                        }
+
                     }
                 }
             }
@@ -329,7 +341,11 @@ public class Menu {
 
         int eleccion = 1;
         while(eleccion == 1){
-            agregarCompetidor(plantilla);
+            try{
+                agregarCompetidor(plantilla);
+            } catch (QueryVaciaException e){
+                System.out.println(e.getMessage());
+            }
             System.out.println("Competidores actuales: " + plantilla.getCantElementos() + "\nDesea agregar otro competidor?\n1.Sí\n2.No");
             eleccion = scanner.nextInt();
             while(eleccion != 1 && eleccion != 2){
@@ -382,24 +398,24 @@ public class Menu {
      * Agrega a un Competidor a la plantilla recibida
      * @param plantilla
      */
-    private void agregarCompetidor(PlantillaCompetidores plantilla) {
+    private void agregarCompetidor(PlantillaCompetidores plantilla) throws QueryVaciaException{
         Competidor nuevoCompetidor;
         API miApi = accederAPI(plantilla.getCategoria());
-        ArrayList<Competidor> busqueda;
+        ArrayList<Competidor> busqueda = null;
         if(miApi == null)
         {
             nuevoCompetidor = crearCompetidorPersonalizado();
         }
         else{
             try {
-                System.out.println("Presione enter para continuar...");
                 scanner.nextLine();
-                System.out.println("Buscar en " + plantilla.getCategoria() + ":");
+                System.out.println("Buscar en " + plantilla.getCategoria().getNombre() + ":");
                 busqueda = miApi.obtenerBusqueda(scanner.nextLine());
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            nuevoCompetidor = elegirResultadoBusqueda(busqueda);
+                nuevoCompetidor = elegirResultadoBusqueda(busqueda);
         }
         plantilla.agregarCompetidor(nuevoCompetidor);
     }
