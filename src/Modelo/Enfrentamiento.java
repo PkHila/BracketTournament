@@ -18,16 +18,14 @@ public class Enfrentamiento {
 
     public void votar(int votacion)
     {
-        if(competidores.get(1).equals(votacion)) {
-            Collections.reverse(competidores);
-        }
+        Collections.swap(competidores,0,votacion-1); //todo validaciones
     }
 
     public Competidor getGanador() {
         return competidores.get(0);
     }
-    public Competidor getPerdedor() {
-        return competidores.get(1);
+    public Competidor getPerdedor(int i) {
+        return competidores.get(i);
     }
     public int getCantCompetidores(){
         return competidores.size();
@@ -36,6 +34,10 @@ public class Enfrentamiento {
 
     @Override
     public String toString() {
-        return "Enfrentamiento:\n" + competidores;
+        String s = "";
+        for (int i = 0; i < competidores.size(); i++) {
+            s = s.concat("[" + (i+1) + "]" + competidores.get(i).getNombre());
+        }
+        return s;
     }
 }

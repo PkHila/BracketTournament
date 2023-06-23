@@ -6,10 +6,7 @@ import Modelo.APIs.MangaAPI;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Resultados.Resultado;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class OrganizadorDeTorneos implements Serializable {
     private HashMap<String, PlantillaCompetidores> plantillas;
@@ -104,7 +101,7 @@ public class OrganizadorDeTorneos implements Serializable {
         return ronda;
     }
 
-    public Resultado jugarTorneo(PlantillaCompetidores competidores) throws CompetidoresInsuficientesException {
+    public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan) throws CompetidoresInsuficientesException {
         Resultado resultado = new Resultado(competidores.getNombre(), competidores.getCategoria());
         Competidor ganador = null;
 
@@ -117,8 +114,8 @@ public class OrganizadorDeTorneos implements Serializable {
 
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
+        int voto = 1;
 
-        //----------------------------------------------------------------------------------//
         for(int i = 0; i<cantidadRondas; i++){
             //Le agrego la primera ronda para testear
             rondas.add(crearRonda(arregloCompetidores));
@@ -126,18 +123,25 @@ public class OrganizadorDeTorneos implements Serializable {
             //Vacío el arreglo de Competidores
             arregloCompetidores.clear();
 
-            Random rand = new Random();//!!!Para testear. Remover luego!!!
             for(Enfrentamiento enfrentamiento : rondas.get(i)){
-                enfrentamiento.votar(rand.nextInt(2));
+                while(voto < 0 || voto >= enfrentamiento.getCantCompetidores()){
+                    System.out.println(enfrentamiento + "\nIngrese el numero de candidato a votar:");
+                    voto = scan.nextInt();
+                }
+                enfrentamiento.votar(voto);
+
+
                 ganador = enfrentamiento.getGanador();
-                resultado.agregarEliminado(ganador, enfrentamiento.getPerdedor(), i);
+                for (int j = 1; j < enfrentamiento.getCantCompetidores(); j++) {
+                    resultado.agregarEliminado(ganador, enfrentamiento.getPerdedor(j), i);
+                }
                 arregloCompetidores.add(ganador);
             }
-            resultado.setGanador(ganador);
         }
-
+        resultado.setGanador(ganador);
         return resultado;
     }
+
 
     public void inicializarPlantillas(ArrayList<PlantillaCompetidores> plantillasDeArchivo) {
         for (PlantillaCompetidores plantilla: plantillasDeArchivo) {
