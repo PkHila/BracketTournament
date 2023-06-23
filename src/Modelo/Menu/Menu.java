@@ -51,9 +51,8 @@ public class Menu {
     private void administrarTorneos() {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
-        boolean exito;
+        boolean salir = true;
         do {
-            exito = true;
             System.out.println("Menu administrar torneos");
             System.out.println("[1] Crear torneo\n[2] Borrar torneo\n[3] Modificar torneo\n[0] Salir");
             eleccion = scanner.nextInt();
@@ -71,9 +70,10 @@ public class Menu {
                     plantilla = elegirPlantilla();
                     if(plantilla != null) modificarPlantilla(plantilla);
                 }
-                default -> exito = false;
+                case 0 -> salir = true;
+                default -> salir = false;
             }
-        } while (exito);
+        } while (!salir);
     }
 
     private void modificarPlantilla(PlantillaCompetidores plantilla) {
@@ -261,11 +261,13 @@ public class Menu {
             plantilla = sistema.buscarPlantilla(nombre);
         }
         else {
-            System.out.println("No hay plantillas cargadas. Queres crear una?\n1. Sí\n2. No");
+            System.out.println("No hay plantillas cargadas");
+            /*System.out.println("No hay plantillas cargadas. Queres crear una?\n1. Sí\n2. No");
             eleccion = scanner.nextInt();
             if(eleccion == 1) {
                 plantilla = crearNuevoTorneo();
-            }
+            }*/
+            //todo ver si sacar esto
             
         }
         return plantilla;
@@ -377,6 +379,9 @@ public class Menu {
     private void listarResultados(ArrayList<Resultado> resultados){
         for (Resultado r: resultados) {
             System.out.println(r+"\n");
+        }
+        if(resultados.isEmpty()){
+            System.out.println("No hay resultados todavía");
         }
     }
 }

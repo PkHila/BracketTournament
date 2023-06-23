@@ -122,7 +122,7 @@ public class OrganizadorDeTorneos{
         System.out.println("Comienza el torneo!");
 
         for(int i = 0; i<cantidadRondas; i++){
-            System.out.println("\nRonda " + i+1 + ":");
+            System.out.println("\nRonda " + (i+1) + ":");
             //Le agrego la primera ronda para testear
             rondas.add(crearRonda(arregloCompetidores));
 

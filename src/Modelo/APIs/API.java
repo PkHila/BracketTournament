@@ -21,7 +21,7 @@ public abstract class API {
          if(arregloResultados.length() == 0){
             throw new QueryVaciaException("No se encontró ningún resultado para su busqueda");
          }
-         for (int i = 0; i < arregloResultados.length() && i < 10; i++) {
+         for (int i = 0; i < arregloResultados.length() && i < 5; i++) {
             Competidor nuevo = competidorDesdeJSON(arregloResultados.getJSONObject(i));
             topResultados.add(nuevo);
          }
