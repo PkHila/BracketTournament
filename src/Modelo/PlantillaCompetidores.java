@@ -61,10 +61,7 @@ public class PlantillaCompetidores implements Serializable{
         Collections.shuffle(arrayCompetidores);
         return arrayCompetidores;
     }
-    public ArrayList<Competidor> copiarAlArray() throws CompetidoresInsuficientesException {
 
-        return copiarAlArray(16);
-    }
     public String listarCompetidores() { // posible listarNombresDeCompetidores()
         StringBuilder stringBuilder = new StringBuilder();
         Iterator<Competidor> it = listaCompetidores.iterator();

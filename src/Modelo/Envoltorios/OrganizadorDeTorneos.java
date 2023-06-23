@@ -101,13 +101,13 @@ public class OrganizadorDeTorneos implements Serializable {
         return ronda;
     }
 
-    public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan) throws CompetidoresInsuficientesException {
+    public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan, int limite) throws CompetidoresInsuficientesException {
         Resultado resultado = new Resultado(competidores.getNombre(), competidores.getCategoria());
         Competidor ganador = null;
 
         //paso los competidores de la plantilla a un arreglo
         ArrayList<Competidor> arregloCompetidores;
-        arregloCompetidores = competidores.copiarAlArray();
+        arregloCompetidores = competidores.copiarAlArray(limite);
 
         int cantidadRondas = calcularCantidadDeRondas(arregloCompetidores.size());
         resultado.setCantidadDeRondas(cantidadRondas);
@@ -141,6 +141,10 @@ public class OrganizadorDeTorneos implements Serializable {
         resultado.setGanador(ganador);
         return resultado;
     }
+    public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan) throws CompetidoresInsuficientesException {
+        return jugarTorneo(competidores, scan, 16);
+    }
+
 
 
     public void inicializarPlantillas(ArrayList<PlantillaCompetidores> plantillasDeArchivo) {

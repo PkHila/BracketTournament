@@ -106,12 +106,43 @@ public class Menu {
                     Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
                     resultados.add(resultado);
                 } catch (CompetidoresInsuficientesException e) {
-                    System.out.println("Competidores insuficientes: "); // todo desarrollar menu para elegir si jugar con menos o agregar
-                    plantilla.getCantElementos();
+                    // todo desarrollar menu para elegir si jugar con menos o agregar
+                    tratarCompetidoresInsuficientes(plantilla, scanner, resultados);
                 }
             }
 
         } while (eleccion != 0);
+    }
+
+    private void tratarCompetidoresInsuficientes(PlantillaCompetidores plantilla, Scanner scanner, ArrayList<Resultado> resultados) {
+        System.out.println("Competidores insuficientes: " + "actualmente " + plantilla.getCantElementos());
+        int eleccion = 0;
+        int cantidadParaJugar = plantilla.getCantElementos();
+        do {
+            System.out.println("1 jugar con menos competidores 2 agregar mas competidores");
+            eleccion = scanner.nextInt();
+            switch (eleccion) {
+                case 1 -> {
+                    while(cantidadParaJugar != 8 && cantidadParaJugar != 4) {
+                        cantidadParaJugar--;
+                    }
+                }
+                case 2 -> {
+                    while (cantidadParaJugar != 8 && cantidadParaJugar != 16) {
+                        agregarCompetidor(plantilla);
+                        cantidadParaJugar++;
+                    }
+                }
+            }
+        } while (eleccion != 0 && eleccion != 1 && eleccion != 2);
+        if(eleccion != 0) {
+            try {
+                Resultado resultado = sistema.jugarTorneo(plantilla, scanner, cantidadParaJugar);
+                resultados.add(resultado);
+            } catch (CompetidoresInsuficientesException e) {
+                System.out.println("Algo malo ocurrio, esto no deberia ocurrir: " + e.getMessage());
+            }
+        }
     }
 
     private PlantillaCompetidores elegirPlantilla() {
