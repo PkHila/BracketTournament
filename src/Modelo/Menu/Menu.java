@@ -106,7 +106,6 @@ public class Menu {
                     Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
                     resultados.add(resultado);
                 } catch (CompetidoresInsuficientesException e) {
-                    // todo desarrollar menu para elegir si jugar con menos o agregar
                     tratarCompetidoresInsuficientes(plantilla, scanner, resultados);
                 }
             }
@@ -230,7 +229,7 @@ public class Menu {
         return plantilla;
     }
 
-    private PlantillaCompetidores crearNuevoTorneo() { //fixme arreglar esta monstruosidad
+    private PlantillaCompetidores crearNuevoTorneo() {
         System.out.println("Crear nueva plantilla:\nPresione enter para continuar...");
         scanner.nextLine();
         System.out.println("Ingrese nombre de la plantilla");
@@ -240,7 +239,8 @@ public class Menu {
         try {
             categoria = elegirCategoria();
         } catch (CategoriaInvalidaException e) {
-            throw new RuntimeException(e);      //todo tratamiento adecuado
+            System.out.println("Categoria invalida, asignando Personalizada por defecto");
+            categoria = Categoria.PERSONALIZADA;
         }
         PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre,categoria);
 
