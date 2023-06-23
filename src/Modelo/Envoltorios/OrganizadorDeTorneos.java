@@ -1,10 +1,12 @@
 package Modelo.Envoltorios;
 
-import Modelo.*;
-import Modelo.APIs.AnimeAPI;
-import Modelo.APIs.MangaAPI;
+import Modelo.Categoria;
+import Modelo.Competidor;
+import Modelo.Enfrentamiento;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
+import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
+
 import java.io.Serializable;
 import java.util.*;
 

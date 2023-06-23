@@ -2,11 +2,13 @@ package Modelo.Resultados;
 
 import Modelo.Categoria;
 import Modelo.Competidor;
-import Modelo.Enfrentamiento;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
 
+/**
+ * Esta clase contiene la información de un Torneo ya jugado, nombre y categoría, así como el ganador, cuántas rondas se jugaron y todos los Competidores Eliminados
+ */
 public class Resultado implements Serializable {
     private int cantidadDeRondas; // con esta informacion se puede inferir en que ronda perdio cada Competidor que no es el ganador
     private Competidor ganador;
@@ -14,6 +16,11 @@ public class Resultado implements Serializable {
     private String nombre;
     private Categoria categoria;
 
+    /**
+     * Instancia un Resultado con el nombre y la categoria a la que pertenecen y los demás campos inicializados
+     * @param nombre
+     * @param categoria
+     */
     public Resultado(String nombre, Categoria categoria) {
         this.cantidadDeRondas = 0;
         this.ganador = null;
@@ -38,6 +45,12 @@ public class Resultado implements Serializable {
         this.ganador = ganador;
     }
 
+    /**
+     * Agrega un Competidor Eliminado a la colección
+     * @param ganador
+     * @param perdedor
+     * @param contador
+     */
     public void agregarEliminado(Competidor ganador, Competidor perdedor, int contador) {
         Eliminado eliminado = new Eliminado(perdedor.getNombre(), perdedor.getInfo(), ganador, queRondaEs(contador));
         eliminados.add(eliminado);
@@ -60,6 +73,10 @@ public class Resultado implements Serializable {
                 "Eliminados:\n" + listarEliminados();
     }
 
+    /**
+     * Devuelve la lista de Eliminados como cadena de texto
+     * @return la lista de Eliminados
+     */
     private String listarEliminados() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Eliminado eliminado : eliminados) {
@@ -68,6 +85,11 @@ public class Resultado implements Serializable {
         return stringBuilder.toString();
     }
 
+    /**
+     * Dependiendo del contador y la cantidad de rondas devuelve un texto indicativo de qué ronda es
+     * @param contador
+     * @return qué ronda es como cadena de texto
+     */
     private String queRondaEs(int contador) {
         String ronda = "";
         if(contador == this.cantidadDeRondas - 1) {

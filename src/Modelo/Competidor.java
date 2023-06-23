@@ -1,22 +1,33 @@
 package Modelo;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Objects;
-
+/**
+ * Esta clase contiene la información de un Competidor básico, con nombre y un texto descriptivo
+ */
 public class Competidor{
 
     private String nombre;
     private String info;
 
+    /**
+     * Instancia un Competidor vacío
+     */
     public Competidor() {
     }
 
+    /**
+     * Instancia un Competidor con su nombre pero info por defecto
+     * @param nombre
+     */
     public Competidor(String nombre){
         this.nombre = nombre;
         info = "no disponible";
     }
 
+    /**
+     * Instancia un Competidor con su nombre y su texto descriptivo
+     * @param nombre
+     * @param info
+     */
     public Competidor(String nombre, String info){
         this.nombre = nombre;
         this.info = info;
