@@ -233,7 +233,7 @@ public class Menu {
     }
 
     private PlantillaCompetidores crearNuevoTorneo() {
-        System.out.println("Crear nueva plantilla:\nPresione enter para continuar...");
+        System.out.println("Crear nueva plantilla:\n");
         scanner.nextLine();
         System.out.println("Ingrese nombre de la plantilla");
         String nombre = scanner.nextLine();
@@ -250,7 +250,7 @@ public class Menu {
         int eleccion = 1;
         while(eleccion == 1){
             agregarCompetidor(plantilla);
-            System.out.println("Desea agregar otro competidor?\n1.Sí\n2.No");
+            System.out.println("Competidores actuales: " + plantilla.getCantElementos() + "\nDesea agregar otro competidor?\n1.Sí\n2.No");
             eleccion = scanner.nextInt();
             while(eleccion != 1 && eleccion != 2){
                 System.out.println("Opcion invalida");
