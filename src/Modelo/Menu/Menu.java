@@ -58,7 +58,7 @@ public class Menu {
             }
             if(plantilla != null) {
                 try {
-                    sistema.jugarTorneo(plantilla);
+                    sistema.jugarTorneo(plantilla, scanner);
                 } catch (CompetidoresInsuficientesException e) {
                     System.out.println("Competidores insuficientes: "); // todo desarrollar menu para elegir si jugar con menos o agregar
                 }
@@ -103,19 +103,25 @@ public class Menu {
 
         System.out.println("1 Anime 2 Manga 3 Peliculas 4 Series 5 Juegos 6 Personalizada");
         eleccion = scanner.nextInt();
-        switch (eleccion) {
-            case 1 -> categoria = Categoria.ANIME;
-            case 2 -> categoria = Categoria.MANGA;
-            case 3 -> categoria = Categoria.PELICULAS;
-            case 4 -> categoria = Categoria.SERIES;
-            case 5 -> categoria = Categoria.JUEGOS;
-            case 6 -> categoria = Categoria.PERSONALIZADA;
-        }
+        categoria = getCategoria(eleccion);
+
 
         if(categoria==null){
             throw new CategoriaInvalidaException("La categoria es invalida. Categoria: ", categoria);
         }
         return categoria;
+    }
+
+    public Categoria getCategoria(int id){
+        return switch (id) {
+            case 1 -> Categoria.ANIME;
+            case 2 -> Categoria.MANGA;
+            case 3 -> Categoria.PELICULAS;
+            case 4 -> Categoria.SERIES;
+            case 5 -> Categoria.JUEGOS;
+            case 6 -> Categoria.PERSONALIZADA;
+            default -> null;
+        };
     }
 
     private PlantillaCompetidores listarPlantillas(boolean porCategoria, Categoria categoria) {
