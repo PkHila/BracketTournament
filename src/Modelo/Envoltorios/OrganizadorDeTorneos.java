@@ -53,7 +53,7 @@ public class OrganizadorDeTorneos {
      * Construye un ArrayList con los nombres de las plantillas de la coleccion
      * filtrados por categoria
      * @param categoria categoria de la enumeracion
-     * @return un ArrayList<String> con todos los nombres de las plantillas filtrados por categoria
+     * @return un ArrayList con todos los nombres de las plantillas filtrados por categoria
      */
     public ArrayList<String> listarPlantillas(Categoria categoria){
         ArrayList<String> nombresDePlantillas = new ArrayList<>();
