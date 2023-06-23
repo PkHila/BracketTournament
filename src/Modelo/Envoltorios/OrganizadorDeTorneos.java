@@ -123,7 +123,6 @@ public class OrganizadorDeTorneos{
 
         for(int i = 0; i<cantidadRondas; i++){
             System.out.println("\nRonda " + (i+1) + ":");
-            //Le agrego la primera ronda para testear
             rondas.add(crearRonda(arregloCompetidores));
 
             //Vacío el arreglo de Competidores

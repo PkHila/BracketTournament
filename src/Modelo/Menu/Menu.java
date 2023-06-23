@@ -255,10 +255,19 @@ public class Menu {
             System.out.println(i+1 + ": " + listaPlantillas.get(i) + "\n");
         }
         if(listaPlantillas.size() != 0) {
-            System.out.println("elegir plantilla:");
-            eleccion = scanner.nextInt();
-            String nombre = listaPlantillas.get(eleccion-1);
-            plantilla = sistema.buscarPlantilla(nombre);
+            do{
+                System.out.println("elegir plantilla:");
+                eleccion = scanner.nextInt();
+                if(eleccion > 0 && eleccion <= listaPlantillas.size()){
+                    String nombre = listaPlantillas.get(eleccion-1);
+                    plantilla = sistema.buscarPlantilla(nombre);
+                }
+                else {
+                    System.out.println("Elección invalida");
+                }
+            }while(eleccion < 1 || eleccion > listaPlantillas.size());
+
+
         }
         else {
             System.out.println("No hay plantillas cargadas");
@@ -268,7 +277,7 @@ public class Menu {
                 plantilla = crearNuevoTorneo();
             }*/
             //todo ver si sacar esto
-            
+
         }
         return plantilla;
     }
