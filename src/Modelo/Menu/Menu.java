@@ -55,7 +55,7 @@ public class Menu {
         do {
             exito = true;
             System.out.println("Menu administrar torneos");
-            System.out.println("[1] crear torneo\n[2] borrar torneo\n[3] modificar torneo\n[0] Salir");
+            System.out.println("[1] Crear torneo\n[2] Borrar torneo\n[3] Modificar torneo\n[0] Salir");
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1 -> {
@@ -78,9 +78,8 @@ public class Menu {
 
     private void modificarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
-        boolean salir;
+        boolean salir = true;
         do {
-            salir = false;
             System.out.println("Modificar plantilla:\n" + plantilla);
             System.out.println("[1] Agregar competidor \n[2] Eliminar competidor\n[0] Salir");
             eleccion = scanner.nextInt();
@@ -93,7 +92,8 @@ public class Menu {
                     }
                 }
                 case 2 -> eliminarCompetidor(plantilla);
-                default -> salir = true;
+                case 0 -> salir = true;
+                default -> salir = false;
             }
         } while (!salir);
     }
@@ -114,9 +114,8 @@ public class Menu {
     private void jugarTorneo(ArrayList<Resultado> resultados) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
-        boolean salir;
+        boolean salir = true;
         do {
-            salir = false;
             System.out.println("Menu jugar torneo");
             System.out.println("[1] Jugar torneo desde plantilla\n[2] Crear nuevo torneo\n[0] Salir");
             eleccion = scanner.nextInt();
@@ -124,21 +123,23 @@ public class Menu {
             switch (eleccion) {
                 case 1 -> plantilla = elegirPlantilla();
                 case 2 -> plantilla = crearNuevoTorneo();
-                default -> salir = true;
+                case 0 -> salir = true;
+                default -> salir = false;
 
             }
-            if(plantilla != null) {
-                sistema.agregarPlantilla(plantilla);
-                try {
-                    Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
-                    System.out.println(resultado);
-                    resultados.add(resultado);
-                } catch (CompetidoresInsuficientesException e) {
-                    tratarCompetidoresInsuficientes(plantilla, scanner, resultados);
-                }
-            }
-
         } while (!salir);
+
+        if(plantilla != null) {
+            sistema.agregarPlantilla(plantilla);
+            try {
+                Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
+                System.out.println(resultado);
+                resultados.add(resultado);
+            } catch (CompetidoresInsuficientesException e) {
+                tratarCompetidoresInsuficientes(plantilla, scanner, resultados);
+            }
+        }
+
     }
 
     private void tratarCompetidoresInsuficientes(PlantillaCompetidores plantilla, Scanner scanner, ArrayList<Resultado> resultados) {
@@ -146,7 +147,7 @@ public class Menu {
         int eleccion = 0;
         int cantidadParaJugar = plantilla.getCantElementos();
         do {
-            System.out.println("1 jugar con menos competidores 2 agregar mas competidores");
+            System.out.println("[1] Jugar con menos competidores\n[2] Agregar mas competidores");
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1 -> {
@@ -171,9 +172,11 @@ public class Menu {
             try {
                 Resultado resultado = sistema.jugarTorneo(plantilla, scanner, cantidadParaJugar);
                 resultados.add(resultado);
+                System.out.println(resultado);
             } catch (CompetidoresInsuficientesException e) {
                 System.out.println("Algo malo ocurrio, esto no deberia ocurrir: " + e.getMessage());
             }
+
         }
     }
 

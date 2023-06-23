@@ -31,14 +31,15 @@ public class PlantillaCompetidores implements Serializable{
     public boolean eliminarCompetidor(Competidor competidor) {
         return listaCompetidores.remove(competidor);
     }
-    public boolean eliminarCompetidor(String nombre) {
+
+    /*public boolean eliminarCompetidor(Competidor competidor) {
         boolean respuesta = false;
-        if(listaCompetidores.contains(nombre)) {
+        if(listaCompetidores.contains(competidor)) {
             listaCompetidores.remove(new Competidor(nombre));
             respuesta = true;
         }
         return respuesta;
-    }
+    }*/
 
     public int getCantElementos() {
         return listaCompetidores.size();
@@ -46,28 +47,27 @@ public class PlantillaCompetidores implements Serializable{
 
 
     public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
-        if(!potenciaDeDos(listaCompetidores.size())) {
-            throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
-        }
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         int cantidadDeCompetidores = 0;
         while (it.hasNext() && cantidadDeCompetidores < limite) {
-            Competidor aux = it.next();
-            Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
-            arrayCompetidores.add(competidor);
-            cantidadDeCompetidores++;
+                Competidor aux = it.next();
+                Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
+                arrayCompetidores.add(competidor);
+                cantidadDeCompetidores++;
+        }
+        if(!potenciaDeDos(arrayCompetidores.size())) {
+            throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
         }
         Collections.shuffle(arrayCompetidores);
         return arrayCompetidores;
     }
 
-    public String listarCompetidores() { // posible listarNombresDeCompetidores()
+    public String listarCompetidores() {
         StringBuilder stringBuilder = new StringBuilder();
-        Iterator<Competidor> it = listaCompetidores.iterator();
-        stringBuilder.append(" - ");
-        while (it.hasNext()) {
-            stringBuilder.append(it.next().getNombre() + " - ");
+        stringBuilder.append("- ");
+        for (Competidor listaCompetidore : listaCompetidores) {
+            stringBuilder.append(listaCompetidore.getNombre()).append("\n- ");
         }
         return stringBuilder.toString();
     }

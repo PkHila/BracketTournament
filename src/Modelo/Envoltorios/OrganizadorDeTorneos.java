@@ -6,6 +6,7 @@ import Modelo.APIs.MangaAPI;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Resultados.Resultado;
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class OrganizadorDeTorneos{
@@ -118,8 +119,10 @@ public class OrganizadorDeTorneos{
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
         int voto = 0;
+        System.out.println("Comienza el torneo!");
 
         for(int i = 0; i<cantidadRondas; i++){
+            System.out.println("\nRonda " + i+1 + ":");
             //Le agrego la primera ronda para testear
             rondas.add(crearRonda(arregloCompetidores));
 

@@ -44,6 +44,11 @@ public class Competidor implements Serializable{
     }
 
     @Override
+    public int hashCode() {
+        return 1;
+    }
+
+    @Override
     public String toString() {
         String s = "";
         s = s.concat("Competidor:\n" + "nombre: " + nombre + ", info: " + info);
