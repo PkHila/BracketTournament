@@ -27,11 +27,11 @@ public class Menu {
         OrganizadorDeTorneos sistema = new OrganizadorDeTorneos();
         sistema.inicializarPlantillas(plantillas);
         do {
-            System.out.println("1 jugar torneo 2 administrar plantillas");
+            System.out.println("1 jugar torneo 2 administrar torneos");
             eleccion = scanner.nextInt();
             switch (eleccion) {
-                case 1 -> jugarTorneo();
-                case 2 -> administrarPlantillas();
+                case 1 -> jugarTorneo(resultados);
+                case 2 -> administrarTorneos();
                 case 0 -> System.out.println("Cerrando...");
                 default -> System.out.println("Opción invalida");
             }
@@ -39,12 +39,57 @@ public class Menu {
         scanner.close();
     }
 
-    private void administrarPlantillas() {
+    private void administrarTorneos() {
         int eleccion = 0;
-        System.out.println("");
+        PlantillaCompetidores plantilla = null;
+        do {
+            System.out.println("1 crear torneo 2 borrar torneo 3 modificar torneo");
+            eleccion = scanner.nextInt();
+            switch (eleccion) {
+                case 1 -> {
+                    plantilla = crearNuevoTorneo();
+                    sistema.agregarPlantilla(plantilla);
+                }
+                case 2 -> {
+                    plantilla = elegirPlantilla();
+                    borrarPlantilla(plantilla);
+                }
+                case 3 -> {
+                    plantilla = elegirPlantilla();
+                    modificarPlantilla(plantilla);
+                }
+
+            }
+        } while (eleccion != 0);
     }
 
-    private void jugarTorneo() {
+    private void modificarPlantilla(PlantillaCompetidores plantilla) {
+        int eleccion = 0;
+        do {
+            System.out.println(plantilla);
+            System.out.println("1 agregar competidor 2 eliminar competidor");
+            eleccion = scanner.nextInt();
+            switch (eleccion) {
+                case 1 -> agregarCompetidor(plantilla);
+                case 2 -> eliminarCompetidor(plantilla);
+            }
+        } while (eleccion != 0);
+    }
+
+    private void borrarPlantilla(PlantillaCompetidores plantilla) {
+        int eleccion = 0;
+        System.out.println(plantilla);
+        System.out.println("Estas seguro que queres borrar este torneo?\n 1. Sí\n2. No");
+        eleccion = scanner.nextInt();
+        if (eleccion == 1) {
+            sistema.eliminarPlantilla(plantilla);
+            System.out.println("torneo borrado");
+        } else {
+            System.out.println("operacion cancelada, volviendo al menu");
+        }
+    }
+
+    private void jugarTorneo(ArrayList<Resultado> resultados) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
         do {
@@ -52,22 +97,24 @@ public class Menu {
             eleccion = scanner.nextInt();
 
             switch (eleccion) {
-                case 1 -> plantilla = jugarDesdePlantilla();
+                case 1 -> plantilla = elegirPlantilla();
                 case 2 -> plantilla = crearNuevoTorneo();
 
             }
             if(plantilla != null) {
                 try {
-                    sistema.jugarTorneo(plantilla, scanner);
+                    Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
+                    resultados.add(resultado);
                 } catch (CompetidoresInsuficientesException e) {
                     System.out.println("Competidores insuficientes: "); // todo desarrollar menu para elegir si jugar con menos o agregar
+                    plantilla.getCantElementos();
                 }
             }
 
         } while (eleccion != 0);
     }
 
-    private PlantillaCompetidores jugarDesdePlantilla() {
+    private PlantillaCompetidores elegirPlantilla() {
         int eleccion = 0;
         Categoria categoria = null;
         PlantillaCompetidores plantilla = null;
@@ -112,7 +159,7 @@ public class Menu {
         return categoria;
     }
 
-    public Categoria getCategoria(int id){
+    private Categoria getCategoria(int id){
         return switch (id) {
             case 1 -> Categoria.ANIME;
             case 2 -> Categoria.MANGA;
@@ -158,8 +205,6 @@ public class Menu {
         System.out.println("Ingrese nombre de la plantilla");
         String nombre = scanner.nextLine();
         Categoria categoria;
-        ArrayList<Competidor> busqueda;
-        Competidor nuevoCompetidor;
 
         try {
             categoria = elegirCategoria();
@@ -167,27 +212,10 @@ public class Menu {
             throw new RuntimeException(e);      //todo tratamiento adecuado
         }
         PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre,categoria);
-        API miApi = accederAPI(categoria);
-
 
         int eleccion = 1;
         while(eleccion == 1){
-            if(miApi == null)
-            {
-                nuevoCompetidor = crearCompetidorPersonalizado();
-            }
-            else{
-                try {
-                    System.out.println("Presione enter para continuar...");
-                    scanner.nextLine();
-                    System.out.println("Buscar en " + categoria + ":");
-                    busqueda = miApi.obtenerBusqueda(scanner.nextLine());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                nuevoCompetidor = elegirResultadoBusqueda(busqueda);
-            }
-            plantilla.agregarCompetidor(nuevoCompetidor);
+            agregarCompetidor(plantilla);
             System.out.println("Desea agregar otro competidor?\n1.Sí\n2.No");
             eleccion = scanner.nextInt();
             while(eleccion != 1 && eleccion != 2){
@@ -199,11 +227,7 @@ public class Menu {
                 eleccion = 1;
             }
         }
-
         return plantilla;
-
-
-
     }
 
     private Competidor elegirResultadoBusqueda(ArrayList<Competidor> resultados) {
@@ -228,6 +252,37 @@ public class Menu {
         System.out.println("Ingrese una pieza de informacion sobre el competidor");
         String info = scanner.nextLine();
         return new Competidor(nombre,info);
+    }
+
+    private void agregarCompetidor(PlantillaCompetidores plantilla) {
+        Competidor nuevoCompetidor;
+        API miApi = accederAPI(plantilla.getCategoria());
+        ArrayList<Competidor> busqueda;
+        if(miApi == null)
+        {
+            nuevoCompetidor = crearCompetidorPersonalizado();
+        }
+        else{
+            try {
+                System.out.println("Presione enter para continuar...");
+                scanner.nextLine();
+                System.out.println("Buscar en " + plantilla.getCategoria() + ":");
+                busqueda = miApi.obtenerBusqueda(scanner.nextLine());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            nuevoCompetidor = elegirResultadoBusqueda(busqueda);
+        }
+        plantilla.agregarCompetidor(nuevoCompetidor);
+    }
+
+    private void eliminarCompetidor(PlantillaCompetidores plantilla) {
+        scanner.nextLine();
+        System.out.println("escriba un nombre de la lista o cualquier otra cosa para cancelar");
+        System.out.println(plantilla.listarCompetidores());
+        if(plantilla.eliminarCompetidor(new Competidor(scanner.nextLine()))) {
+            System.out.println("competidor eliminado");
+        }
     }
 
     //TODO: completar opciones
