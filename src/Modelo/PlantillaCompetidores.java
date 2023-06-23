@@ -65,6 +65,15 @@ public class PlantillaCompetidores implements Serializable{
 
         return copiarAlArray(16);
     }
+    public String listarCompetidores() { // posible listarNombresDeCompetidores()
+        StringBuilder stringBuilder = new StringBuilder();
+        Iterator<Competidor> it = listaCompetidores.iterator();
+        stringBuilder.append(" - ");
+        while (it.hasNext()) {
+            stringBuilder.append(it.next().getNombre() + " - ");
+        }
+        return stringBuilder.toString();
+    }
 
 
     private static boolean potenciaDeDos(float numero) {
