@@ -26,26 +26,35 @@ public class Menu {
         int eleccion = 0;
         sistema.inicializarPlantillas(plantillas);
         plantillas.clear();
+        boolean salir;
         do {
+            salir = false;
             System.out.println("Menu principal");
-            System.out.println("1 jugar torneo 2 administrar torneos");
+            System.out.println("[1] Jugar torneo\n[2] Administrar torneos\n" +
+                    "[3] Ver listado de resultados\n[0] Salir");
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1 -> jugarTorneo(resultados);
                 case 2 -> administrarTorneos();
-                case 0 -> System.out.println("Cerrando...");
+                case 3 -> listarResultados(resultados);
+                case 0 -> {
+                    System.out.println("Cerrando...");
+                    salir = true;
+                }
                 default -> System.out.println("Opción invalida");
             }
-        } while (eleccion != 0);
+        } while (!salir);
         sistema.pasarPlantillasAlArray(plantillas);
     }
 
     private void administrarTorneos() {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
+        boolean exito;
         do {
+            exito = true;
             System.out.println("Menu administrar torneos");
-            System.out.println("1 crear torneo 2 borrar torneo 3 modificar torneo");
+            System.out.println("[1] crear torneo\n[2] borrar torneo\n[3] modificar torneo\n[0] Salir");
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1 -> {
@@ -61,21 +70,25 @@ public class Menu {
                     plantilla = elegirPlantilla();
                     if(plantilla != null) modificarPlantilla(plantilla);
                 }
+                default -> exito = false;
             }
-        } while (eleccion != 0);
+        } while (exito);
     }
 
     private void modificarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
+        boolean salir;
         do {
-            System.out.println("modificar plantilla:\n" + plantilla);
-            System.out.println("1 agregar competidor 2 eliminar competidor");
+            salir = false;
+            System.out.println("Modificar plantilla:\n" + plantilla);
+            System.out.println("[1] Agregar competidor \n[2] Eliminar competidor\n[0] Salir");
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1 -> agregarCompetidor(plantilla);
                 case 2 -> eliminarCompetidor(plantilla);
+                default -> salir = true;
             }
-        } while (eleccion != 0);
+        } while (!salir);
     }
 
     private void borrarPlantilla(PlantillaCompetidores plantilla) {
@@ -94,27 +107,31 @@ public class Menu {
     private void jugarTorneo(ArrayList<Resultado> resultados) {
         int eleccion = 0;
         PlantillaCompetidores plantilla = null;
+        boolean salir;
         do {
+            salir = false;
             System.out.println("Menu jugar torneo");
-            System.out.println("1 jugar torneo desde plantilla 2 crear nuevo torneo");
+            System.out.println("[1] Jugar torneo desde plantilla\n[2] Crear nuevo torneo\n[0] Salir");
             eleccion = scanner.nextInt();
 
             switch (eleccion) {
                 case 1 -> plantilla = elegirPlantilla();
                 case 2 -> plantilla = crearNuevoTorneo();
+                default -> salir = true;
 
             }
             if(plantilla != null) {
                 sistema.agregarPlantilla(plantilla);
                 try {
                     Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
+                    System.out.println(resultado);
                     resultados.add(resultado);
                 } catch (CompetidoresInsuficientesException e) {
                     tratarCompetidoresInsuficientes(plantilla, scanner, resultados);
                 }
             }
 
-        } while (eleccion != 0);
+        } while (!salir);
     }
 
     private void tratarCompetidoresInsuficientes(PlantillaCompetidores plantilla, Scanner scanner, ArrayList<Resultado> resultados) {
@@ -152,9 +169,11 @@ public class Menu {
         int eleccion = 0;
         Categoria categoria = null;
         PlantillaCompetidores plantilla = null;
+        boolean exito;
         do {
+            exito = true;
             System.out.println("Eleccion de plantilla:");
-            System.out.println("1 buscar por categoria 2 buscar por nombre 3 listar plantillas");
+            System.out.println("[1] Buscar por categoria [2] Buscar por nombre [3] Listar plantillas");
             eleccion = scanner.nextInt();
             switch (eleccion) {
                 case 1 -> {
@@ -174,8 +193,9 @@ public class Menu {
                     plantilla = sistema.buscarPlantilla(scanner.nextLine());
                 }
                 case 3 -> plantilla = listarPlantillas(false, null);
+                default -> exito = false;
             }
-        } while (eleccion != 0);
+        } while (!exito);
         return plantilla;
     }
 
@@ -183,10 +203,9 @@ public class Menu {
         int eleccion = 0;
         Categoria categoria = null;
         System.out.println("Eleccion de categoría:");
-        System.out.println("1 Anime 2 Manga 3 Peliculas 4 Series 5 Juegos 6 Personalizada");
+        System.out.println("[1] Anime\n[2] Manga\n[3] Peliculas\n[4] Series\n[5] Juegos\n[6] Personalizada");
         eleccion = scanner.nextInt();
         categoria = getCategoria(eleccion);
-
 
         if(categoria==null){
             throw new CategoriaInvalidaException("La categoria es invalida. Categoria: ", categoria);
@@ -325,7 +344,6 @@ public class Menu {
         }
     }
 
-    //TODO: completar opciones
     private API accederAPI(Categoria categoria){
         return switch (categoria){
             case ANIME -> new AnimeAPI();
@@ -333,7 +351,13 @@ public class Menu {
             case PELICULAS -> new PeliculasAPI();
             case SERIES -> new SeriesAPI();
             case JUEGOS -> new JuegosAPI();
-            case PERSONALIZADA -> null; //fixme esto no lo chequeo en ningun lado AAAAAHHHH
+            case PERSONALIZADA -> null;
         };
+    }
+
+    private void listarResultados(ArrayList<Resultado> resultados){
+        for (Resultado r: resultados) {
+            System.out.println(r+"\n");
+        }
     }
 }

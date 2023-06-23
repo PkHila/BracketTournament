@@ -23,7 +23,7 @@ public class Main {
         }
 
         new Menu().principal(plantillas, resultados);
-        try { // fixme: determinar si es mejor todo el en mismo try catch
+        try {
             controladorArchivoPlantillas.grabar(plantillas, "plantillas.bin");
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

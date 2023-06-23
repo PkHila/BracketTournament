@@ -18,7 +18,7 @@ public class Enfrentamiento {
 
     public void votar(int votacion)
     {
-        Collections.swap(competidores,0,votacion-1); //todo validaciones
+        Collections.swap(competidores,0,votacion-1);
     }
 
     public Competidor getGanador() {
