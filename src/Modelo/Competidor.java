@@ -1,22 +1,35 @@
 package Modelo;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Objects;
 
-public class Competidor implements Serializable{
+/**
+ * Esta clase contiene la información de un Competidor básico, con nombre y un texto descriptivo. Es serializable, por tanto, las clases hereden de ella
+ */
+public class Competidor implements Serializable {
 
     private String nombre;
     private String info;
 
+    /**
+     * Instancia un Competidor vacío
+     */
     public Competidor() {
     }
 
+    /**
+     * Instancia un Competidor con su nombre pero info por defecto
+     * @param nombre nombre descriptivo
+     */
     public Competidor(String nombre){
         this.nombre = nombre;
         info = "no disponible";
     }
 
+    /**
+     * Instancia un Competidor con su nombre y su texto descriptivo
+     * @param nombre nombre descriptivo
+     * @param info informacion adicional
+     */
     public Competidor(String nombre, String info){
         this.nombre = nombre;
         this.info = info;

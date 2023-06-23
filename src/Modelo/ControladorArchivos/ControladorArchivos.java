@@ -3,7 +3,17 @@ package Modelo.ControladorArchivos;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Esta clase generica maneja archivos de objetos del tipo especificado
+ * @param <T> una Clase que implemente Serializable
+ */
 public class ControladorArchivos<T extends Serializable> {
+    /**
+     * Recorre un ArrayList de Objetos del tipo especificado y los guarda en un archivo con el nombre enviado por parametro
+     * @param elementos
+     * @param archivo
+     * @throws IOException
+     */
     public void grabar(ArrayList<T> elementos, String archivo) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(archivo);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -16,6 +26,12 @@ public class ControladorArchivos<T extends Serializable> {
         objectOutputStream.close();
     }
 
+    /**
+     * Lee el archivo con el nombre enviado por parametro y devuelve un ArrayList con los Objetos que leyó
+     * @param archivo
+     * @return Coleccion de Objetos del tipo especificado
+     * @throws IOException
+     */
     public ArrayList<T> leer(String archivo) throws IOException {
         ArrayList<T> elementos = null;
 

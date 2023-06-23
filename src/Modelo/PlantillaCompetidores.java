@@ -14,6 +14,11 @@ public class PlantillaCompetidores implements Serializable, IEntradaSalida<Compe
     private String nombre;
     private Categoria categoria;
 
+    /**
+     * Construye una Plantilla con su colección vacía. Nombre y categoría especificados.
+     * @param nombre nombre descriptivo
+     * @param categoria una categoria dentro de la enumeracion
+     */
     public PlantillaCompetidores(String nombre, Categoria categoria) {
         listaCompetidores = new HashSet<>();
         this.nombre = nombre;
@@ -55,7 +60,14 @@ public class PlantillaCompetidores implements Serializable, IEntradaSalida<Compe
     }
 
 
-    public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
+    /**
+     * Instancia un ArrayList con una cantidad potencia de 2 de Competidores en orden aleatorio y los devuelve
+     * @param limite cualquier numero potencia de 2
+     * @return un ArrayList de Competidores en orden aleatorio
+     * @throws CompetidoresInsuficientesException si la colección no tiene una cantidad potencia de 2
+     */
+    public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException {
+
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         int cantidadDeCompetidores = 0;
@@ -72,6 +84,10 @@ public class PlantillaCompetidores implements Serializable, IEntradaSalida<Compe
         return arrayCompetidores;
     }
 
+    /**
+     * Construye una lista de nombres de competidores
+     * @return los nombres de los competidores como cadena de texto
+     */
     public String listarCompetidores() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("- ");
@@ -81,7 +97,11 @@ public class PlantillaCompetidores implements Serializable, IEntradaSalida<Compe
         return stringBuilder.toString();
     }
 
-
+    /**
+     * Calcula recursivamente si un numero es potencia de 2
+     * @param numero cualquier numero
+     * @return true si es potencia de 2, false en caso contrario
+     */
     private static boolean potenciaDeDos(float numero) {
         if(numero == 1) {
             return true;

@@ -2,7 +2,9 @@ package Modelo.Envoltorios;
 
 import Modelo.*;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
+import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
+
 import java.io.Serializable;
 import java.sql.SQLOutput;
 import java.util.*;
@@ -14,20 +16,18 @@ import java.util.*;
 public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidores> {
     private HashMap<String, PlantillaCompetidores> plantillas;
 
+    /**
+     * Construye una instancia con su coleccion vacia
+     */
     public OrganizadorDeTorneos() {
         plantillas = new HashMap<>();
     }
 
-    public OrganizadorDeTorneos(ArrayList<PlantillaCompetidores> plantillas) {
-        this.plantillas = new HashMap<>();
-        inicializarPlantillas(plantillas);
-    }
-
-    public PlantillaCompetidores crearPlantilla(String nombre, Categoria categoria) {
-        PlantillaCompetidores plantilla = new PlantillaCompetidores(nombre, categoria);
-        return plantilla;
-    }
-
+    /**
+     * Hace una busqueda por nombre en la coleccion de plantillas y la devuelve de ser encontrada
+     * @param nombre nombre de una plantilla
+     * @return una plantilla dentro de la coleccion o null de no encontrarse
+     */
     public PlantillaCompetidores buscarPlantilla(String nombre) {
         PlantillaCompetidores plantilla = null;
         if(plantillas.containsKey(nombre)) {
@@ -36,6 +36,10 @@ public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidore
         return plantilla;
     }
 
+    /**
+     * Construye un ArrayList con los nombres de las plantillas de la coleccion
+     * @return un ArrayList con todos los nombres de las plantillas
+     */
     public ArrayList<String> listarPlantillas(){
         ArrayList<String> nombresDePlantillas = new ArrayList<>();
         for (Map.Entry<String, PlantillaCompetidores> p : plantillas.entrySet()) {
@@ -44,6 +48,12 @@ public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidore
         return nombresDePlantillas;
     }
 
+    /**
+     * Construye un ArrayList con los nombres de las plantillas de la coleccion
+     * filtrados por categoria
+     * @param categoria categoria de la enumeracion
+     * @return un ArrayList con todos los nombres de las plantillas filtrados por categoria
+     */
     public ArrayList<String> listarPlantillas(Categoria categoria){
         ArrayList<String> nombresDePlantillas = new ArrayList<>();
         for (Map.Entry<String, PlantillaCompetidores> p : plantillas.entrySet()) {
@@ -83,7 +93,12 @@ public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidore
     }
 
 
-    private int calcularCantidadDeRondas(int cantidadDeCompetidores) { // o cantCompetidores
+    /**
+     * Dada una cantidad de competidores, calcula una cantidad de rondas sabiendo que debe ser una potencia de dos
+     * @param cantidadDeCompetidores total de competidores
+     * @return la cantidad de rondas de un torneo
+     */
+    private int calcularCantidadDeRondas(int cantidadDeCompetidores) {
         int cantRondas = 0;
         int potenciaDeDos = 2;
         while(cantidadDeCompetidores >= potenciaDeDos) {
@@ -93,6 +108,11 @@ public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidore
         return cantRondas;
     }
 
+    /**
+     * Instancia un ArrayList de Enfrentamientos desde un ArrayList de competidores
+     * @param arregloCompetidores coleccion de competidores
+     * @return una ronda de enfretamientos
+     */
     private ArrayList<Enfrentamiento> crearRonda(ArrayList<Competidor> arregloCompetidores){
 
         ArrayList<Enfrentamiento>  ronda = new ArrayList<>();
@@ -110,6 +130,14 @@ public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidore
         return ronda;
     }
 
+    /**
+     * Provistos una plantilla, un Scanner y un limite se dispone a resolver los enfrentamientos que surgen de las llamadas sucesivas a crearRonda
+     * @param competidores plantilla de competidores
+     * @param scan scanner
+     * @param limite potencia de 2 para evitar la excepcion
+     * @return  el resultado de haberse jugado un torneo
+     * @throws CompetidoresInsuficientesException si la cantidad de competidores no es potencia de 2
+     */
     public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan, int limite) throws CompetidoresInsuficientesException {
         Resultado resultado = new Resultado(competidores.getNombre(), competidores.getCategoria());
         Competidor ganador = null;
@@ -152,18 +180,34 @@ public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidore
         resultado.setGanador(ganador);
         return resultado;
     }
+
+    /**
+     Provistos una plantilla y un Scanner se dispone a resolver los enfrentamientos que surgen de las llamadas sucesivas a crearRonda
+     * @param competidores plantilla de competidores
+     * @param scan scanner
+     * @return  el resultado de haberse jugado un torneo
+     * @throws CompetidoresInsuficientesException si la cantidad de competidores no es potencia de 2
+     */
     public Resultado jugarTorneo(PlantillaCompetidores competidores, Scanner scan) throws CompetidoresInsuficientesException {
         return jugarTorneo(competidores, scan, 16);
     }
 
-
-
+    /**
+     * Inicializa la colección de Plantillas desde un ArrayList si y solo si la colección está vacía
+     * @param plantillasDeArchivo ArrayList proveniente de archivo de plantillas
+     */
     public void inicializarPlantillas(ArrayList<PlantillaCompetidores> plantillasDeArchivo) {
-        for (PlantillaCompetidores plantilla: plantillasDeArchivo) {
-            plantillas.put(plantilla.getNombre(), plantilla);
+        if (plantillas.size() == 0) {
+            for (PlantillaCompetidores plantilla: plantillasDeArchivo) {
+                plantillas.put(plantilla.getNombre(), plantilla);
+            }
         }
     }
 
+    /**
+     * Pasa la colección a un ArrayList de plantillas. Los elementos que pasa son los mismos que contiene la colección
+     * @param plantillas ArrayList proveniente de archivo de plantillas
+     */
     public void pasarPlantillasAlArray(ArrayList<PlantillaCompetidores> plantillas) {
         Iterator<Map.Entry<String, PlantillaCompetidores>> it = this.plantillas.entrySet().iterator();
         while (it.hasNext()) {
