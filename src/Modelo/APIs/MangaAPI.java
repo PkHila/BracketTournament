@@ -18,8 +18,10 @@ public class MangaAPI extends API{
     @Override
     public Competidor competidorDesdeJSON(JSONObject j) throws JSONException {
         Competidor nuevo = new Competidor();
-        nuevo.setNombre(j.getString("title_english"));
-        nuevo.setInfo(j.getString("year"));
+        nuevo.setNombre(j.getString("title"));
+        JSONObject published = j.getJSONObject("published");
+        String [] from = published.getString("from").split("-");
+        nuevo.setInfo(from[0]);
         return nuevo;
     }
 
