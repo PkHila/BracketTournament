@@ -1,15 +1,17 @@
 package Modelo.Envoltorios;
 
 import Modelo.*;
-import Modelo.APIs.AnimeAPI;
-import Modelo.APIs.MangaAPI;
 import Modelo.Excepciones.CompetidoresInsuficientesException;
 import Modelo.Resultados.Resultado;
 import java.io.Serializable;
 import java.sql.SQLOutput;
 import java.util.*;
 
-public class OrganizadorDeTorneos{
+/**
+ * Clase envoltorio de la coleccion de plantillas de competidores
+ * Tiene las reglas de negocio de las plantillas, permite su creacion, eliminacion y modificacion
+ */
+public class OrganizadorDeTorneos implements IEntradaSalida<PlantillaCompetidores> {
     private HashMap<String, PlantillaCompetidores> plantillas;
 
     public OrganizadorDeTorneos() {
@@ -52,7 +54,12 @@ public class OrganizadorDeTorneos{
         return nombresDePlantillas;
     }
 
-    public boolean agregarPlantilla(PlantillaCompetidores plantilla) {
+    /**
+     * Recibe una plantilla y la agrega si no es null y si no existe una plantilla con la misma clave en la coleccion
+     * @param plantilla plantilla para agregar
+     * @return false si plantilla == null o existe una plantilla con la misma clave en la coleccion, true en caso contrario
+     */
+    public boolean agregar(PlantillaCompetidores plantilla) {
         boolean respuesta = false;
         if(plantilla != null && !plantillas.containsKey(plantilla.getNombre())) {
             plantillas.put(plantilla.getNombre(), plantilla);
@@ -61,7 +68,12 @@ public class OrganizadorDeTorneos{
         return respuesta;
     }
 
-    public boolean eliminarPlantilla(PlantillaCompetidores plantilla) {
+    /**
+     * Elimina la plantilla provista de la coleccion si y solo si existe dentro de la coleccion
+     * @param plantilla plantilla para eliminar
+     * @return true si existe una plantilla con la misma clave en la coleccion, false en caso contrario
+     */
+    public boolean eliminar(PlantillaCompetidores plantilla) {
         boolean respuesta = false;
         if(plantilla != null && plantillas.containsKey(plantilla.getNombre())) {
             plantillas.remove(plantilla.getNombre());
@@ -69,14 +81,7 @@ public class OrganizadorDeTorneos{
         }
         return respuesta;
     }
-    public boolean eliminarPlantilla(String nombre) {
-        boolean respuesta = false;
-        if(plantillas.containsKey(nombre)) {
-            plantillas.remove(nombre);
-            respuesta = true;
-        }
-        return respuesta;
-    }
+
 
     private int calcularCantidadDeRondas(int cantidadDeCompetidores) { // o cantCompetidores
         int cantRondas = 0;

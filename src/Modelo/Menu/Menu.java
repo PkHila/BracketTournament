@@ -59,7 +59,7 @@ public class Menu {
             switch (eleccion) {
                 case 1 -> {
                     plantilla = crearNuevoTorneo();
-                    sistema.agregarPlantilla(plantilla);
+                    sistema.agregar(plantilla);
                 }
                 case 2 -> {
                     plantilla = elegirPlantilla();
@@ -104,7 +104,7 @@ public class Menu {
         System.out.println("Estas seguro que queres borrar este torneo?\n 1. Sí\n2. No");
         eleccion = scanner.nextInt();
         if (eleccion == 1) {
-            sistema.eliminarPlantilla(plantilla);
+            sistema.eliminar(plantilla);
             System.out.println("torneo borrado");
         } else {
             System.out.println("operacion cancelada, volviendo al menu");
@@ -130,7 +130,7 @@ public class Menu {
         } while (!salir);
 
         if(plantilla != null) {
-            sistema.agregarPlantilla(plantilla);
+            sistema.agregar(plantilla);
             try {
                 Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
                 System.out.println(resultado);
@@ -271,13 +271,6 @@ public class Menu {
         }
         else {
             System.out.println("No hay plantillas cargadas");
-            /*System.out.println("No hay plantillas cargadas. Queres crear una?\n1. Sí\n2. No");
-            eleccion = scanner.nextInt();
-            if(eleccion == 1) {
-                plantilla = crearNuevoTorneo();
-            }*/
-            //todo ver si sacar esto
-
         }
         return plantilla;
     }
@@ -362,14 +355,14 @@ public class Menu {
             }
                 nuevoCompetidor = elegirResultadoBusqueda(busqueda);
         }
-        plantilla.agregarCompetidor(nuevoCompetidor);
+        plantilla.agregar(nuevoCompetidor);
     }
 
     private void eliminarCompetidor(PlantillaCompetidores plantilla) {
         scanner.nextLine();
         System.out.println("escriba un nombre de la lista o cualquier otra cosa para cancelar");
         System.out.println(plantilla.listarCompetidores());
-        if(plantilla.eliminarCompetidor(new Competidor(scanner.nextLine()))) {
+        if(plantilla.eliminar(new Competidor(scanner.nextLine()))) {
             System.out.println("competidor eliminado");
         }
     }

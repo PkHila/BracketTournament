@@ -5,7 +5,10 @@ import Modelo.Excepciones.CompetidoresInsuficientesException;
 import java.io.Serializable;
 import java.util.*;
 
-public class PlantillaCompetidores implements Serializable{
+/**
+ * Esta clase contiene una colección de Competidores, un nombre descriptivo y una categoría. Es serializable.
+ */
+public class PlantillaCompetidores implements Serializable, IEntradaSalida<Competidor>{
 
     private HashSet<Competidor> listaCompetidores;
     private String nombre;
@@ -25,22 +28,28 @@ public class PlantillaCompetidores implements Serializable{
         return categoria;
     }
 
-    public boolean agregarCompetidor(Competidor nuevoCompetidor){
+    /**
+     * Agrega a un Competidor a la colección
+     * @param nuevoCompetidor a agregar
+     * @return true si el Competidor no se encontraba en la colección
+     */
+    public boolean agregar(Competidor nuevoCompetidor){
         return listaCompetidores.add(nuevoCompetidor);
     }
-    public boolean eliminarCompetidor(Competidor competidor) {
+
+    /**
+     * Elimina a un Competidor de la colección
+     * @param competidor a eliminar
+     * @return true si el Competidor se encontraba en la colección
+     */
+    public boolean eliminar(Competidor competidor) {
         return listaCompetidores.remove(competidor);
     }
 
-    /*public boolean eliminarCompetidor(Competidor competidor) {
-        boolean respuesta = false;
-        if(listaCompetidores.contains(competidor)) {
-            listaCompetidores.remove(new Competidor(nombre));
-            respuesta = true;
-        }
-        return respuesta;
-    }*/
-
+    /**
+     * Devuelve el tamaño de la colección
+     * @return la cantidad de Competidores en la colección
+     */
     public int getCantElementos() {
         return listaCompetidores.size();
     }
