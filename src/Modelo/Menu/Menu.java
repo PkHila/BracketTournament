@@ -102,6 +102,7 @@ public class Menu {
 
             }
             if(plantilla != null) {
+                sistema.agregarPlantilla(plantilla);
                 try {
                     Resultado resultado = sistema.jugarTorneo(plantilla, scanner);
                     resultados.add(resultado);
