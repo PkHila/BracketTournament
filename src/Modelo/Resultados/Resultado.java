@@ -18,8 +18,8 @@ public class Resultado implements Serializable {
 
     /**
      * Instancia un Resultado con el nombre y la categoria a la que pertenecen y los demás campos inicializados
-     * @param nombre
-     * @param categoria
+     * @param nombre nombre descriptivo
+     * @param categoria categoria dentro de la enumeracion
      */
     public Resultado(String nombre, Categoria categoria) {
         this.cantidadDeRondas = 0;
@@ -47,9 +47,9 @@ public class Resultado implements Serializable {
 
     /**
      * Agrega un Competidor Eliminado a la colección
-     * @param ganador
-     * @param perdedor
-     * @param contador
+     * @param ganador el que descalifico al perdedor
+     * @param perdedor el descalificado
+     * @param contador un contador para verificar la ronda
      */
     public void agregarEliminado(Competidor ganador, Competidor perdedor, int contador) {
         Eliminado eliminado = new Eliminado(perdedor.getNombre(), perdedor.getInfo(), ganador, queRondaEs(contador));
@@ -87,7 +87,7 @@ public class Resultado implements Serializable {
 
     /**
      * Dependiendo del contador y la cantidad de rondas devuelve un texto indicativo de qué ronda es
-     * @param contador
+     * @param contador un contador para verificar ronda
      * @return qué ronda es como cadena de texto
      */
     private String queRondaEs(int contador) {

@@ -11,10 +11,10 @@ public class Eliminado extends Competidor {
 
     /**
      * Construye una Instancia de un Competidor Eliminado con toda su información
-     * @param nombre
-     * @param info
-     * @param eliminadoPor
-     * @param enRonda
+     * @param nombre nombre
+     * @param info informacion adicional
+     * @param eliminadoPor eliminado por quien
+     * @param enRonda en que ronda
      */
     public Eliminado(String nombre, String info, Competidor eliminadoPor, String enRonda) {
         super(nombre, info);

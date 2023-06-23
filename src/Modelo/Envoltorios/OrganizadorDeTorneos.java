@@ -26,7 +26,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Hace una busqueda por nombre en la coleccion de plantillas y la devuelve de ser encontrada
-     * @param nombre
+     * @param nombre nombre de una plantilla
      * @return una plantilla dentro de la coleccion o null de no encontrarse
      */
     public PlantillaCompetidores buscarPlantilla(String nombre) {
@@ -52,7 +52,7 @@ public class OrganizadorDeTorneos {
     /**
      * Construye un ArrayList con los nombres de las plantillas de la coleccion
      * filtrados por categoria
-     * @param categoria
+     * @param categoria categoria de la enumeracion
      * @return un ArrayList<String> con todos los nombres de las plantillas filtrados por categoria
      */
     public ArrayList<String> listarPlantillas(Categoria categoria){
@@ -67,7 +67,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Recibe una plantilla y la agrega si no es null y si no existe una plantilla con la misma clave en la coleccion
-     * @param plantilla
+     * @param plantilla plantilla para agregar
      * @return false si plantilla == null o existe una plantilla con la misma clave en la coleccion, true en caso contrario
      */
     public boolean agregarPlantilla(PlantillaCompetidores plantilla) {
@@ -81,7 +81,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Elimina la plantilla provista de la coleccion si y solo si existe dentro de la coleccion
-     * @param plantilla
+     * @param plantilla plantilla para eliminar
      * @return true si existe una plantilla con la misma clave en la coleccion, false en caso contrario
      */
     public boolean eliminarPlantilla(PlantillaCompetidores plantilla) {
@@ -95,7 +95,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Elimina una plantilla en la coleccion si existe una plantilla asociada al nombre provisto
-     * @param nombre
+     * @param nombre nombre de una plantilla para buscar
      * @return true si existe una plantilla asociada al nombre provisto, falso en caso contrario
      */
     public boolean eliminarPlantilla(String nombre) {
@@ -109,7 +109,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Dada una cantidad de competidores, calcula una cantidad de rondas sabiendo que debe ser una potencia de dos
-     * @param cantidadDeCompetidores
+     * @param cantidadDeCompetidores total de competidores
      * @return la cantidad de rondas de un torneo
      */
     private int calcularCantidadDeRondas(int cantidadDeCompetidores) {
@@ -124,7 +124,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Instancia un ArrayList de Enfrentamientos desde un ArrayList de competidores
-     * @param arregloCompetidores
+     * @param arregloCompetidores coleccion de competidores
      * @return una ronda de enfretamientos
      */
     private ArrayList<Enfrentamiento> crearRonda(ArrayList<Competidor> arregloCompetidores){
@@ -146,8 +146,8 @@ public class OrganizadorDeTorneos {
 
     /**
      * Provistos una plantilla, un Scanner y un limite se dispone a resolver los enfrentamientos que surgen de las llamadas sucesivas a crearRonda
-     * @param competidores
-     * @param scan
+     * @param competidores plantilla de competidores
+     * @param scan scanner
      * @param limite potencia de 2 para evitar la excepcion
      * @return  el resultado de haberse jugado un torneo
      * @throws CompetidoresInsuficientesException si la cantidad de competidores no es potencia de 2
@@ -196,8 +196,8 @@ public class OrganizadorDeTorneos {
 
     /**
      Provistos una plantilla y un Scanner se dispone a resolver los enfrentamientos que surgen de las llamadas sucesivas a crearRonda
-     * @param competidores
-     * @param scan
+     * @param competidores plantilla de competidores
+     * @param scan scanner
      * @return  el resultado de haberse jugado un torneo
      * @throws CompetidoresInsuficientesException si la cantidad de competidores no es potencia de 2
      */
@@ -207,7 +207,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Inicializa la colección de Plantillas desde un ArrayList si y solo si la colección está vacía
-     * @param plantillasDeArchivo
+     * @param plantillasDeArchivo ArrayList proveniente de archivo de plantillas
      */
     public void inicializarPlantillas(ArrayList<PlantillaCompetidores> plantillasDeArchivo) {
         if (plantillas.size() == 0) {
@@ -219,7 +219,7 @@ public class OrganizadorDeTorneos {
 
     /**
      * Pasa la colección a un ArrayList de plantillas. Los elementos que pasa son los mismos que contiene la colección
-     * @param plantillas
+     * @param plantillas ArrayList proveniente de archivo de plantillas
      */
     public void pasarPlantillasAlArray(ArrayList<PlantillaCompetidores> plantillas) {
         Iterator<Map.Entry<String, PlantillaCompetidores>> it = this.plantillas.entrySet().iterator();

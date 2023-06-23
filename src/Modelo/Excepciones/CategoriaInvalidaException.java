@@ -10,8 +10,8 @@ public class CategoriaInvalidaException extends Exception{
 
     /**
      * Construye una excepcion de categoria invalida con el mensaje especificado y adjunta la categoria recibida
-     * @param message
-     * @param categoriaRecibida
+     * @param message mensaje de error
+     * @param categoriaRecibida categoria dentro de la enumeracion o null
      */
     public CategoriaInvalidaException(String message, Categoria categoriaRecibida) {
         super(message);

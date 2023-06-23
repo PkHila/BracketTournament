@@ -31,8 +31,8 @@ public class Menu {
 
     /**
      * Menu raíz, recibe colecciones de plantillas y resultados leídos desde archivos.
-     * @param plantillas
-     * @param resultados
+     * @param plantillas ArrayList proveniente de archivo de plantillas
+     * @param resultados ArrayList proveniente de archivo de resultados
      */
     public void principal(ArrayList<PlantillaCompetidores> plantillas, ArrayList<Resultado> resultados) {
         int eleccion = 0;
@@ -92,7 +92,7 @@ public class Menu {
 
     /**
      * Menu para modificar una Plantilla, permite agregar o eliminar competidores
-     * @param plantilla
+     * @param plantilla ArrayList proveniente de archivo de plantillas
      */
     private void modificarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
@@ -118,7 +118,7 @@ public class Menu {
 
     /**
      * Dependiendo de input, puede borrar una plantilla del sistema
-     * @param plantilla
+     * @param plantilla ArrayList proveniente de archivo de plantillas
      */
     private void borrarPlantilla(PlantillaCompetidores plantilla) {
         int eleccion = 0;
@@ -135,7 +135,7 @@ public class Menu {
 
     /**
      * Menu para jugar un torneo, se puede elegir una Plantilla para jugar o crear una nueva, también se puede volver atrás sin efectos secundarios
-     * @param resultados
+     * @param resultados ArrayList proveniente de archivo de resultados
      */
     private void jugarTorneo(ArrayList<Resultado> resultados) {
         int eleccion = 0;
@@ -169,9 +169,9 @@ public class Menu {
 
     /**
      * Ante la excepción de competidores insuficientes, se ofrece tratamiento para jugar un torneo con menos Competidores o agregar hasta que sean suficientes
-     * @param plantilla
-     * @param scanner
-     * @param resultados
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     * @param scanner Scanner
+     * @param resultados ArrayList proveniente de archivo de resultados
      */
     private void tratarCompetidoresInsuficientes(PlantillaCompetidores plantilla, Scanner scanner, ArrayList<Resultado> resultados) {
         System.out.println("Competidores insuficientes: " + "actualmente " + plantilla.getCantElementos());
@@ -268,7 +268,7 @@ public class Menu {
 
     /**
      * Conversión de int id a Categoría
-     * @param id
+     * @param id id mapping
      * @return una Categoría dentro de la enumeración o null si está fuera
      */
     private Categoria getCategoria(int id){
@@ -285,8 +285,8 @@ public class Menu {
 
     /**
      * Menu de eleccion de plantillas, presenta una plantilla enumerada y pide input para seleccionar
-     * @param porCategoria
-     * @param categoria
+     * @param porCategoria filtrar o no por categoría
+     * @param categoria una categoría concreta o null
      * @return una Plantilla dentro del sistema
      */
     private PlantillaCompetidores listarPlantillas(boolean porCategoria, Categoria categoria) {
@@ -362,7 +362,7 @@ public class Menu {
 
     /**
      * Dada una lista de Competidores dependiendo del input, retorna uno en particular
-     * @param resultados
+     * @param resultados ArrayList proveniente de archivo de resultados
      * @return el Competidor elegido por input
      */
     private Competidor elegirResultadoBusqueda(ArrayList<Competidor> resultados) {
@@ -396,7 +396,8 @@ public class Menu {
 
     /**
      * Agrega a un Competidor a la plantilla recibida
-     * @param plantilla
+     * @param plantilla ArrayList proveniente de archivo de plantillas
+     * @throws QueryVaciaException si hay una busqueda y produce cero resultados
      */
     private void agregarCompetidor(PlantillaCompetidores plantilla) throws QueryVaciaException{
         Competidor nuevoCompetidor;
@@ -422,7 +423,7 @@ public class Menu {
 
     /**
      * Lista los competidores de una Plantilla y luego intenta eliminar un competidor recibido por input
-     * @param plantilla
+     * @param plantilla ArrayList proveniente de archivo de plantillas
      */
     private void eliminarCompetidor(PlantillaCompetidores plantilla) {
         scanner.nextLine();
@@ -435,7 +436,7 @@ public class Menu {
 
     /**
      * Instancia una API según la categoría correspondiente
-     * @param categoria
+     * @param categoria una categoría concreta o null
      * @return una instancia de una de las clases que heredan de API
      */
     private API accederAPI(Categoria categoria){
@@ -451,7 +452,7 @@ public class Menu {
 
     /**
      * Muestra los resultados almacenados
-     * @param resultados
+     * @param resultados ArrayList proveniente de archivo de resultados
      */
     private void listarResultados(ArrayList<Resultado> resultados){
         for (Resultado r: resultados) {

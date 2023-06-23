@@ -18,7 +18,7 @@ public class Competidor implements Serializable {
 
     /**
      * Instancia un Competidor con su nombre pero info por defecto
-     * @param nombre
+     * @param nombre nombre descriptivo
      */
     public Competidor(String nombre){
         this.nombre = nombre;
@@ -27,8 +27,8 @@ public class Competidor implements Serializable {
 
     /**
      * Instancia un Competidor con su nombre y su texto descriptivo
-     * @param nombre
-     * @param info
+     * @param nombre nombre descriptivo
+     * @param info informacion adicional
      */
     public Competidor(String nombre, String info){
         this.nombre = nombre;

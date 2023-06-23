@@ -15,9 +15,9 @@ public class PlantillaCompetidores implements Serializable{
     private Categoria categoria;
 
     /**
-     * Construye un Plantilla con su colección vacía. Nombre y categoría especificados.
-     * @param nombre
-     * @param categoria
+     * Construye una Plantilla con su colección vacía. Nombre y categoría especificados.
+     * @param nombre nombre descriptivo
+     * @param categoria una categoria dentro de la enumeracion
      */
     public PlantillaCompetidores(String nombre, Categoria categoria) {
         listaCompetidores = new HashSet<>();
@@ -35,7 +35,7 @@ public class PlantillaCompetidores implements Serializable{
 
     /**
      * Agrega a un Competidor a la colección
-     * @param nuevoCompetidor
+     * @param nuevoCompetidor a agregar
      * @return true si el Competidor no se encontraba en la colección
      */
     public boolean agregarCompetidor(Competidor nuevoCompetidor){
@@ -44,7 +44,7 @@ public class PlantillaCompetidores implements Serializable{
 
     /**
      * Elimina a un Competidor de la colección
-     * @param competidor
+     * @param competidor a eliminar
      * @return true si el Competidor se encontraba en la colección
      */
     public boolean eliminarCompetidor(Competidor competidor) {
@@ -69,7 +69,7 @@ public class PlantillaCompetidores implements Serializable{
 
     /**
      * Instancia un ArrayList con una cantidad potencia de 2 de Competidores en orden aleatorio y los devuelve
-     * @param limite
+     * @param limite cualquier numero potencia de 2
      * @return un ArrayList de Competidores en orden aleatorio
      * @throws CompetidoresInsuficientesException si la colección no tiene una cantidad potencia de 2
      */
@@ -106,7 +106,7 @@ public class PlantillaCompetidores implements Serializable{
 
     /**
      * Calcula recursivamente si un numero es potencia de 2
-     * @param numero
+     * @param numero cualquier numero
      * @return true si es potencia de 2, false en caso contrario
      */
     private static boolean potenciaDeDos(float numero) {

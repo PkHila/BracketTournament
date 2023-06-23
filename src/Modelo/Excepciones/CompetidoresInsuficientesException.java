@@ -8,7 +8,7 @@ public class CompetidoresInsuficientesException extends Exception{
 
     /**
      * Construye una excepcion del tipo competidores insuficientes con el mensaje especificado
-     * @param message
+     * @param message mensaje de error
      */
     public CompetidoresInsuficientesException(String message) {
         super(message);
