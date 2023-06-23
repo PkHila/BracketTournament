@@ -50,14 +50,15 @@ public class PlantillaCompetidores implements Serializable{
     public boolean eliminarCompetidor(Competidor competidor) {
         return listaCompetidores.remove(competidor);
     }
-    public boolean eliminarCompetidor(String nombre) {
+
+    /*public boolean eliminarCompetidor(Competidor competidor) {
         boolean respuesta = false;
-        if(listaCompetidores.contains(nombre)) {
+        if(listaCompetidores.contains(competidor)) {
             listaCompetidores.remove(new Competidor(nombre));
             respuesta = true;
         }
         return respuesta;
-    }
+    }*/
 
     /**
      * Devuelve el tamaño de la colección
@@ -67,6 +68,7 @@ public class PlantillaCompetidores implements Serializable{
         return listaCompetidores.size();
     }
 
+
     /**
      * Instancia un ArrayList con una cantidad potencia de 2 de Competidores en orden aleatorio y los devuelve
      * @param limite cualquier numero potencia de 2
@@ -74,17 +76,18 @@ public class PlantillaCompetidores implements Serializable{
      * @throws CompetidoresInsuficientesException si la colección no tiene una cantidad potencia de 2
      */
     public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException {
-        if(!potenciaDeDos(listaCompetidores.size())) {
-            throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
-        }
+
         ArrayList<Competidor> arrayCompetidores = new ArrayList<>();
         Iterator<Competidor> it = listaCompetidores.iterator();
         int cantidadDeCompetidores = 0;
         while (it.hasNext() && cantidadDeCompetidores < limite) {
-            Competidor aux = it.next();
-            Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
-            arrayCompetidores.add(competidor);
-            cantidadDeCompetidores++;
+                Competidor aux = it.next();
+                Competidor competidor = new Competidor(aux.getNombre(), aux.getInfo());
+                arrayCompetidores.add(competidor);
+                cantidadDeCompetidores++;
+        }
+        if(!potenciaDeDos(arrayCompetidores.size())) {
+            throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
         }
         Collections.shuffle(arrayCompetidores);
         return arrayCompetidores;
@@ -96,10 +99,9 @@ public class PlantillaCompetidores implements Serializable{
      */
     public String listarCompetidores() {
         StringBuilder stringBuilder = new StringBuilder();
-        Iterator<Competidor> it = listaCompetidores.iterator();
-        stringBuilder.append(" - ");
-        while (it.hasNext()) {
-            stringBuilder.append(it.next().getNombre() + " - ");
+        stringBuilder.append("- ");
+        for (Competidor listaCompetidore : listaCompetidores) {
+            stringBuilder.append(listaCompetidore.getNombre()).append("\n- ");
         }
         return stringBuilder.toString();
     }

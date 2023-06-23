@@ -8,6 +8,7 @@ import Modelo.PlantillaCompetidores;
 import Modelo.Resultados.Resultado;
 
 import java.io.Serializable;
+import java.sql.SQLOutput;
 import java.util.*;
 
 /**
@@ -166,9 +167,10 @@ public class OrganizadorDeTorneos {
         //Gran estructura de Rondas, contiene cada ronda
         ArrayList<ArrayList<Enfrentamiento>> rondas = new ArrayList<>();
         int voto = 0;
+        System.out.println("Comienza el torneo!");
 
         for(int i = 0; i<cantidadRondas; i++){
-            //Le agrego la primera ronda para testear
+            System.out.println("\nRonda " + (i+1) + ":");
             rondas.add(crearRonda(arregloCompetidores));
 
             //Vacío el arreglo de Competidores

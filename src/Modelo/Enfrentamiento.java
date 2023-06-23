@@ -46,6 +46,9 @@ public class Enfrentamiento {
         String s = "";
         for (int i = 0; i < competidores.size(); i++) {
             s = s.concat("[" + (i+1) + "]" + competidores.get(i).getNombre());
+            if(i != competidores.size()-1){
+                s = s.concat(" VS ");
+            }
         }
         return s;
     }

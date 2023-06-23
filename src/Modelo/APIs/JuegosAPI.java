@@ -10,8 +10,15 @@ public class JuegosAPI extends API{
     Competidor competidorDesdeJSON(JSONObject j) throws JSONException {
         Competidor nuevo = new Competidor();
         nuevo.setNombre(j.getString("name"));
-        String [] released = j.getString("released").split("-");
-        nuevo.setInfo(released[0]);
+        if(!j.getBoolean("tba")){
+            String [] released = j.getString("released").split("-");
+            nuevo.setInfo(released[0]);
+        }
+        else{
+            nuevo.setInfo("tba");
+        }
+
+
         return nuevo;
     }
 
