@@ -1,21 +1,30 @@
 package Modelo;
 
-import Modelo.Resultados.Eliminado;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Esta clase contiene una colección de competidores y ofrece funcionalidad para votar. Se entiende que el primer elemento es el ganador de un Enfrentamiento.
+ */
 public class Enfrentamiento {
 
     private ArrayList<Competidor> competidores;
 
+    /**
+     * Se intancia un Enfrentamiento y se agregan a la colección los Competidores especificados
+     * @param competidor1
+     * @param competidor2
+     */
     public Enfrentamiento(Competidor competidor1, Competidor competidor2){
         competidores = new ArrayList<>();
         competidores.add(competidor1);
         competidores.add(competidor2);
     }
 
+    /**
+     * Siendo validado de antemano el parámetro, se hace el intercambio entre el primer elemento y el que está en la posición especificada.
+     * @param votacion
+     */
     public void votar(int votacion)
     {
         Collections.swap(competidores,0,votacion-1);

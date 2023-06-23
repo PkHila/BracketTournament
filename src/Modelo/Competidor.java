@@ -1,9 +1,11 @@
 package Modelo;
 
+import java.io.Serializable;
+
 /**
- * Esta clase contiene la información de un Competidor básico, con nombre y un texto descriptivo
+ * Esta clase contiene la información de un Competidor básico, con nombre y un texto descriptivo. Es serializable, por tanto, las clases hereden de ella
  */
-public class Competidor{
+public class Competidor implements Serializable {
 
     private String nombre;
     private String info;

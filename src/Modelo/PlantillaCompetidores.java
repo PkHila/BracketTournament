@@ -5,12 +5,20 @@ import Modelo.Excepciones.CompetidoresInsuficientesException;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Esta clase contiene una colección de Competidores, un nombre descriptivo y una categoría. Es serializable.
+ */
 public class PlantillaCompetidores implements Serializable{
 
     private HashSet<Competidor> listaCompetidores;
     private String nombre;
     private Categoria categoria;
 
+    /**
+     * Construye un Plantilla con su colección vacía. Nombre y categoría especificados.
+     * @param nombre
+     * @param categoria
+     */
     public PlantillaCompetidores(String nombre, Categoria categoria) {
         listaCompetidores = new HashSet<>();
         this.nombre = nombre;
@@ -25,9 +33,20 @@ public class PlantillaCompetidores implements Serializable{
         return categoria;
     }
 
+    /**
+     * Agrega a un Competidor a la colección
+     * @param nuevoCompetidor
+     * @return true si el Competidor no se encontraba en la colección
+     */
     public boolean agregarCompetidor(Competidor nuevoCompetidor){
         return listaCompetidores.add(nuevoCompetidor);
     }
+
+    /**
+     * Elimina a un Competidor de la colección
+     * @param competidor
+     * @return true si el Competidor se encontraba en la colección
+     */
     public boolean eliminarCompetidor(Competidor competidor) {
         return listaCompetidores.remove(competidor);
     }
@@ -40,12 +59,21 @@ public class PlantillaCompetidores implements Serializable{
         return respuesta;
     }
 
+    /**
+     * Devuelve el tamaño de la colección
+     * @return la cantidad de Competidores en la colección
+     */
     public int getCantElementos() {
         return listaCompetidores.size();
     }
 
-
-    public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException { //copia los elementos contenidos en el torneo a un Array con orden random
+    /**
+     * Instancia un ArrayList con una cantidad potencia de 2 de Competidores en orden aleatorio y los devuelve
+     * @param limite
+     * @return un ArrayList de Competidores en orden aleatorio
+     * @throws CompetidoresInsuficientesException si la colección no tiene una cantidad potencia de 2
+     */
+    public ArrayList<Competidor> copiarAlArray(int limite) throws CompetidoresInsuficientesException {
         if(!potenciaDeDos(listaCompetidores.size())) {
             throw new CompetidoresInsuficientesException("La cantidad de competidores no es potencia de dos y no se puede jugar");
         }
@@ -62,7 +90,11 @@ public class PlantillaCompetidores implements Serializable{
         return arrayCompetidores;
     }
 
-    public String listarCompetidores() { // posible listarNombresDeCompetidores()
+    /**
+     * Construye una lista de nombres de competidores
+     * @return los nombres de los competidores como cadena de texto
+     */
+    public String listarCompetidores() {
         StringBuilder stringBuilder = new StringBuilder();
         Iterator<Competidor> it = listaCompetidores.iterator();
         stringBuilder.append(" - ");
@@ -72,7 +104,11 @@ public class PlantillaCompetidores implements Serializable{
         return stringBuilder.toString();
     }
 
-
+    /**
+     * Calcula recursivamente si un numero es potencia de 2
+     * @param numero
+     * @return true si es potencia de 2, false en caso contrario
+     */
     private static boolean potenciaDeDos(float numero) {
         if(numero == 1) {
             return true;
